@@ -35,6 +35,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -42,45 +43,27 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    '@nuxtjs/proxy',
+    'vue-sweetalert2/nuxt',
+    
   ],
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/api': 'http://35.178.125.50/twilio'
+  },
+  
   pwa: {
-    icon: false, // disables the icon module
+    icon: true, // disables the icon module
     manifest: {
-      name: 'Nuxt.js PWA survival store',
-      short_name: 'Nuxt.js PWA',
+      name: 'FindingNuhu',
+      short_name: 'FN',
       lang: 'en',
       display: 'standalone',
-    },
-    workbox: {
-      runtimeCaching: [
-        {
-          urlPattern: 'https://fonts.googleapis.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
-        },
-        {
-          urlPattern: 'https://fonts.gstatic.com/.*',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
-        },
-        {
-          urlPattern: 'https://cdn.snipcart.com/.*',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
-        },
-        {
-          urlPattern: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js',
-          handler: 'cacheFirst',
-          method: 'GET',
-          strategyOptions: { cacheableResponse: { statuses: [0, 200] } }
-        }
-      ]
     }
   },
-
+  
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
