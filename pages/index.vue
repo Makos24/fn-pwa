@@ -1,5 +1,6 @@
 <template>
 <div>
+  <div class="loader" v-if="loadings"></div>
 <div>
   <button  v-on:click="sidebarToggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Sidebar
@@ -35,6 +36,7 @@ export default {
                   data() {
                     return {
                       loading: true,
+                      loadings: false,
                       visible: false,
                       users: [],
                       isSuccess: false
@@ -50,6 +52,7 @@ export default {
                   },
                   async uploadData() {
                     if (localStorage.getItem("users")){
+                      this.loadings = true;
                       this.users = JSON.parse(localStorage.getItem("users"))
                     // let res = await this.$axios.post("http://35.178.125.50/twilio/api/index.php", this.users)
                     // .catch(error => {
@@ -58,15 +61,16 @@ export default {
                     // return res;
                     // 
 
-var optionAxios = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-            //http://35.178.125.50/twilio
-        }
+                      var optionAxios = {
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                            //http://35.178.125.50/twilio
+                        }
 
-                    this.$axios.post("/api/index.php", this.users, optionAxios)
+                    this.$axios.post("https://35.178.125.50/twilio/api/", this.users, optionAxios)
                           .then(response => {
+                            this.loadings = false;
                             console.log(response.data.message);
                             if(response.data.message == "Upload successful."){
 
@@ -81,6 +85,7 @@ var optionAxios = {
                             }
                           })
                           .catch(error => {
+                            this.loadings = false;
                             this.errorMessage = error.message;
                              Swal.fire(
                             'Failed!',
@@ -111,3 +116,22 @@ var optionAxios = {
                 
 
 </script>
+
+<style scoped>
+
+.loader{  /* Loader Div Class */
+    position: absolute;
+    top:0px;
+    right:0px;
+    width:100%;
+    height:100%;
+    background-color:#eceaea;
+    background-image: url('/pwa/loader.gif');
+    background-size: 100px;
+    background-repeat:no-repeat;
+    background-position:center;
+    z-index:10000000;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+</style>

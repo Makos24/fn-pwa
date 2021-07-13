@@ -4,6 +4,9 @@ export default {
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+  router: {
+    base: '/pwa/'
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -28,6 +31,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/pwa-update.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,10 +52,17 @@ export default {
     
   ],
   axios: {
-    proxy: true
+    baseUrl : process.server ? 'http://localhost:3000' : 'http://35.178.125.50/twilio/',
+    credentials: true,
+    proxy : true,
+   // prefix: '/api',
   },
   proxy: {
-    '/api': 'http://35.178.125.50/twilio'
+    //'/api': 'http://35.178.125.50/twilio/',
+    '/api': {
+      target: process.server ? 'http://localhost:3000' : 'http://35.178.125.50/twilio/',
+      changeOrigin: true,
+    },
   },
   
   pwa: {

@@ -170,9 +170,6 @@
  import swal from 'sweetalert2';
 window.Swal = swal;
 export default {  
-
-   
-                  
                   //name: Prereg,
                   //props: ["user"],
                   data() {
@@ -210,7 +207,7 @@ export default {
                       }else{
                           Swal.fire(
                             'Failed!',
-                            'Please correct any errors in the form',
+                            'Please correct any errors on the form',
                             'error'
                             )
                       }
@@ -275,28 +272,19 @@ export default {
                   },
                   mounted(){
                       this.states = states;
-                //       if (localStorage.getItem("previous")){
-                //            if(this.user.state != ''){
-                //            this.lgas = lgas.filter(lga => lga.StateID == this.user.state)
-                //             }
-                //             if(this.user.lga != ''){
-                //            this.wards = wards.filter(ward => ward.LGAID == this.user.lga)
+                      if (localStorage.getItem("previous")){
+                          this.previous = JSON.parse(localStorage.getItem("previous"))
+                        this.user.state = this.previous.state;
+                        this.user.lga = this.previous.lga;
+                        this.user.ward = this.previous.ward;
+                        this.user.settlement = this.previous.settlement;
+                        this.user.phc = this.previous.phc;
+                        this.loadLga();
+                        this.loadWard();
+                        this.loadSettlements();
+                        this.loadPhc();
+                        }
                         
-                //         }
-                //         if(this.user.ward != ''){
-                //            this.settlements = settlements.filter(settlement => settlement.WardID == this.user.ward)
-                //       }
-                          
-                //           if(this.user.settlement != ''){
-                //            this.phcs = phcs.filter(phc => phc.WardID == this.user.ward)
-                //       }
-                //         this.previous = JSON.parse(localStorage.getItem("previous"))
-                //         this.user.state = this.previous.state;
-                //         this.user.lga = this.previous.lga;
-                //         this.user.ward = this.previous.ward;
-                //         this.user.settlement = this.previous.settlement;
-                //         this.user.phc = this.previous.phc;
-                // }
                   } 
                   } 
                   
