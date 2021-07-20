@@ -10,7 +10,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'fn-pwa',
+    title: 'Albarka',
     htmlAttrs: {
       lang: 'en'
     },
@@ -68,8 +68,8 @@ export default {
   pwa: {
     icon: true, // disables the icon module
     manifest: {
-      name: 'FindingNuhu',
-      short_name: 'FN',
+      name: 'Albarka',
+      short_name: 'Albarka',
       lang: 'en',
       display: 'standalone',
     }

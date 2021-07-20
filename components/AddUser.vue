@@ -102,12 +102,23 @@
     
   </div>
 
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+        Mother's Name
+      </label>
+      <input v-model="user.mother" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+      
+    </div>
+    
+  </div>
+
 <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
         Expected Date of Delivery (EDD)
       </label>
-      <input v-model="user.edd" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-edd" type="date" placeholder="" required>
+      <input v-on:change="validateDate" v-model="user.edd" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-edd" type="date" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.edd">{{errors.edd}}</p>
     </div>
   </div>
@@ -115,7 +126,7 @@
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-        Phone number One
+        Contact's Phone number One
       </label>
       <input v-on:blur="validatePhone1" v-model="user.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="number" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone1">{{errors.phone1}}</p>
@@ -124,7 +135,7 @@
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-        Phone number Two
+        Contact's Phone number Two
       </label>
       <input v-on:blur="validatePhone2" v-model="user.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="number" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone2">{{errors.phone2}}</p>
@@ -133,7 +144,7 @@
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-        Phone number Three
+        Contact's Phone number Three
       </label>
       <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="number" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone3">{{errors.phone3}}</p>
@@ -146,7 +157,7 @@
         Cancel
       </button>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-        Register
+        Save
       </button>
     </div>
 
@@ -188,8 +199,19 @@ export default {
                   },
                   methods: {
                   addUser() {
+
+                      if(!this.testDupes()){
+                        Swal.fire(
+                            'Failed!',
+                            'Please do not repeat phone numbers, make sure every number is different',
+                            'error'
+                            );
+
+                            return false;
+                      }
+
                       if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''
-                      && this.errors.phone3 == ''){
+                      && this.errors.phone3 == '' && this.errors.edd == ''){
                           this.$emit('add-user-event', this.user);
                         this.previous = this.user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -200,8 +222,8 @@ export default {
                         this.user.settlement = this.previous.settlement;
                         this.user.phc = this.previous.phc;
                         Swal.fire(
-                            'Data Saved!',
-                            '',
+                            'Data Saved to Device!',
+                            'Parent record has been saved to local storage, please click the submit button to upload',
                             'success'
                             )
                       }else{
@@ -234,13 +256,15 @@ export default {
                       }
                   },
                   validatePhone(phone){
-                      
+                      console.log(this.user.phone1);
                       const rule = /^[0]\d{10}$/;
                       if(phone.target.value.match(rule)){
                           this.errors.phone = '';
                       }else{
                           this.errors.phone = 'Please enter a valid phone number';
                       }
+
+                      
                   },
                   validatePhone1(phone){
                       
@@ -250,6 +274,24 @@ export default {
                       }else{
                           this.errors.phone1 = 'Please enter a valid phone number';
                       }
+
+                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      numbers = numbers.filter(val => val != undefined);
+                      var numFlds = numbers.length;
+
+                      for (var x=0; x<numFlds; x++) {
+                          for (var y=x+1; y<numFlds; y++) {
+                            if (numbers[x] == numbers[y]) {
+                              //alert('There was a match');
+                              this.errors.phone1 = 'Please do not repeat a phone number';
+                            }else{
+                              this.errors.phone1 = '';
+                            }
+                          }
+
+                      
+                    }
+
                   },
                   validatePhone2(phone){
                       
@@ -259,6 +301,23 @@ export default {
                       }else{
                           this.errors.phone2 = 'Please enter a valid phone number';
                       }
+
+                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      numbers = numbers.filter(val => val != undefined);
+                      var numFlds = numbers.length;
+
+                      for (var x=0; x<numFlds; x++) {
+                          for (var y=x+1; y<numFlds; y++) {
+                            if (numbers[x] == numbers[y]) {
+                              //alert('There was a match');
+                              this.errors.phone2 = 'Please do not repeat a phone number';
+                            }else{
+                              this.errors.phone2 = '';
+                            }
+                          }
+
+                      
+                    }
                   },
                   validatePhone3(phone){
                       
@@ -268,6 +327,55 @@ export default {
                       }else{
                           this.errors.phone3 = 'Please enter a valid phone number';
                       }
+
+                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      numbers = numbers.filter(val => val != undefined);
+                      var numFlds = numbers.length;
+
+                      for (var x=0; x<numFlds; x++) {
+                          for (var y=x+1; y<numFlds; y++) {
+                            if (numbers[x] == numbers[y]) {
+                              //alert('There was a match');
+                              this.errors.phone3 = 'Please do not repeat a phone number';
+                            }else{
+                              this.errors.phone3 = '';
+                            }
+                          }
+
+                      
+                    }
+                  },
+                  validateDate(){
+                    var GivenDate = this.user.edd;
+                     GivenDate = new Date(GivenDate);
+                    var CurrentDate = new Date();
+                    var CurrentDate2 = new Date();
+                    var maxDate = CurrentDate2.setMonth(CurrentDate2.getMonth() + 9);
+                   
+                   
+                    //console.log(GivenDate.getTime(), CurrentDate.getTime(), maxDate);
+                      if(GivenDate.getTime() > CurrentDate.getTime() && GivenDate.getTime() < maxDate){
+                          this.errors.edd = '';
+                      }else{
+                        this.errors.edd = 'Please enter a valid EDD, (EDDs cannot be in the past or beyond 9 months in the future)';
+                          
+                      }
+                  },
+                  testDupes() {
+                    var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                    numbers = numbers.filter(val => val != undefined);
+                    //console.log(numbers);
+                    var numFlds = numbers.length;
+                    for (var x=0; x<numFlds; x++) {
+                      for (var y=x+1; y<numFlds; y++) {
+                        if (numbers[x] == numbers[y]) {
+                          //alert('There was a match');
+                          return false;
+                        }
+                      }
+                    }
+                    //alert('No matches');
+                    return true;
                   }  
                   },
                   mounted(){
