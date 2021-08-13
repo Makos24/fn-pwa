@@ -87,16 +87,16 @@
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-        Parent Name
+        Father's Name
       </label>
       <input v-model="user.name" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
       
     </div>
     <div class="w-full md:w-1/2 px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-        Parent Phone
+        Father's Phone
       </label>
-      <input v-on:blur="validatePhone" v-model="user.phone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" required>
+      <input v-on:blur="validatePhone" v-model="user.phone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
         <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.phone}}</p>
     </div>
     
@@ -118,7 +118,10 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
         Expected Date of Delivery (EDD)
       </label>
-      <input v-on:change="validateDate" v-model="user.edd" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-edd" type="date" placeholder="" required>
+      <client-only>
+      <date-picker v-model="user.edd" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
+      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-1.5 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required></date-picker>
+      </client-only>
       <p class="text-red-500 text-xs italic" v-show="errors.edd">{{errors.edd}}</p>
     </div>
   </div>
@@ -128,7 +131,7 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
         Contact's Phone number One
       </label>
-      <input v-on:blur="validatePhone1" v-model="user.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="number" placeholder="" required>
+      <input v-on:blur="validatePhone1" v-model="user.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="tel" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone1">{{errors.phone1}}</p>
     </div>
   </div>
@@ -137,7 +140,7 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
         Contact's Phone number Two
       </label>
-      <input v-on:blur="validatePhone2" v-model="user.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="number" placeholder="" required>
+      <input v-on:blur="validatePhone2" v-model="user.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="tel" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone2">{{errors.phone2}}</p>
     </div>
   </div>
@@ -146,7 +149,7 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
         Contact's Phone number Three
       </label>
-      <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="number" placeholder="" required>
+      <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="tel" placeholder="" required>
       <p class="text-red-500 text-xs italic" v-show="errors.phone3">{{errors.phone3}}</p>
     </div>
   </div>
@@ -173,6 +176,7 @@
 
 <script>
 
+
  import states from '~/static/states.json'
  import lgas from '~/static/lga.json'
  import wards from '~/static/ward.json'
@@ -194,7 +198,20 @@ export default {
                       phcs : [],
                       previous: {},
                       errors: {},
-                      isSuccess: false
+                      isSuccess: false,
+                  //     disabledDates: {
+                  //   customPredictor: function(date) {
+
+                  //       var CurrentDate = new Date();
+                  //       var CurrentDate2 = new Date();
+                  //       var maxDate = CurrentDate2.setMonth(CurrentDate2.getMonth() + 9);
+
+                  //     // disables the date if it is a multiple of 5
+                  //     if(date.getTime() <= CurrentDate.getTime() || date.getTime() > maxDate){
+                  //       return true
+                  //     }
+                  //   }
+                  // }
                     };
                   },
                   methods: {
@@ -211,7 +228,7 @@ export default {
                       }
 
                       if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''
-                      && this.errors.phone3 == '' && this.errors.edd == ''){
+                      && this.errors.phone3 == ''){
                           this.$emit('add-user-event', this.user);
                         this.previous = this.user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -256,8 +273,10 @@ export default {
                       }
                   },
                   validatePhone(phone){
-                      console.log(this.user.phone1);
-                      const rule = /^[0]\d{10}$/;
+                      //console.log(this.user.phone1);
+
+                      //const rule = /^[0]\d{10}$/;
+                      const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
                       if(phone.target.value.match(rule)){
                           this.errors.phone = '';
                       }else{
@@ -268,7 +287,9 @@ export default {
                   },
                   validatePhone1(phone){
                       
-                      const rule = /^[0]\d{10}$/;
+                      //'(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)'
+                      //const rule = /^[0]\d{10}$/;
+                      const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
                       if(phone.target.value.match(rule)){
                           this.errors.phone1 = '';
                       }else{
@@ -295,7 +316,8 @@ export default {
                   },
                   validatePhone2(phone){
                       
-                      const rule = /^[0]\d{10}$/;
+                      //const rule = /^[0]\d{10}$/;
+                      const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
                       if(phone.target.value.match(rule)){
                           this.errors.phone2 = '';
                       }else{
@@ -321,7 +343,8 @@ export default {
                   },
                   validatePhone3(phone){
                       
-                      const rule = /^[0]\d{10}$/;
+                      //const rule = /^[0]\d{10}$/;
+                      const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
                       if(phone.target.value.match(rule)){
                           this.errors.phone3 = '';
                       }else{
@@ -345,22 +368,12 @@ export default {
                       
                     }
                   },
-                  validateDate(){
-                    var GivenDate = this.user.edd;
-                     GivenDate = new Date(GivenDate);
-                    var CurrentDate = new Date();
-                    var CurrentDate2 = new Date();
-                    var maxDate = CurrentDate2.setMonth(CurrentDate2.getMonth() + 9);
-                   
-                   
-                    //console.log(GivenDate.getTime(), CurrentDate.getTime(), maxDate);
-                      if(GivenDate.getTime() > CurrentDate.getTime() && GivenDate.getTime() < maxDate){
-                          this.errors.edd = '';
-                      }else{
-                        this.errors.edd = 'Please enter a valid EDD, (EDDs cannot be in the past or beyond 9 months in the future)';
-                          
-                      }
-                  },
+                  disabledBeforeTodayAndAfter9Months(date) {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+
+                      return date < today || date > new Date(today.getTime() + 252 * 24 * 3600 * 1000);
+                    },
                   testDupes() {
                     var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
                     numbers = numbers.filter(val => val != undefined);
@@ -376,7 +389,8 @@ export default {
                     }
                     //alert('No matches');
                     return true;
-                  }  
+                  },
+                    
                   },
                   mounted(){
                       this.states = states;
@@ -395,7 +409,8 @@ export default {
                         
                   } 
                   } 
-                  
+ 
+ 
                 
 
 </script>
