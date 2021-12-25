@@ -96,7 +96,7 @@ export default {
                             error.message,
                             'error'
                             )
-                            //console.error("There was an error!", error);
+                            console.log(error);
                           });
                     }
                   },

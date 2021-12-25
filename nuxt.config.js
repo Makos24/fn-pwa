@@ -53,7 +53,7 @@ export default {
     
   ],
   axios: {
-    baseUrl : process.server ? 'http://localhost:3000' : 'http://35.178.125.50/twilio/',
+    baseUrl : process.server ? 'http://localhost:3000' : 'https://avigohealth.com/twilio/',
     credentials: true,
     proxy : true,
    // prefix: '/api',
@@ -61,7 +61,7 @@ export default {
   proxy: {
     //'/api': 'http://35.178.125.50/twilio/',
     '/api': {
-      target: process.server ? 'http://localhost:3000' : 'http://35.178.125.50/twilio/',
+      target: process.server ? 'http://localhost:3000' : 'https://avigohealth.com/twilio/',
       changeOrigin: true,
     },
   },
