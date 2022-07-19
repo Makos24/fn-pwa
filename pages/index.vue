@@ -5,6 +5,29 @@
   <!-- <button  v-on:click="sidebarToggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Sidebar
   </button> -->
+
+  <table>
+    <tr>
+      <th>Father</th>
+      <th>Phone</th>
+      <th>Mother</th>
+      <th>EDD</th>
+      <th>Contact 1</th>
+      <th>Contact 2</th>
+      <th>Contact 3</th>
+    </tr>
+
+    <tr v-for="user in users">
+        <td>{{user.name}}</td>
+        <td>{{user.phone}}</td>
+        <td>{{user.mother}}</td>
+        <td>{{user.edd}}</td>
+        <td>{{user.phone1}}</td>
+        <td>{{user.phone2}}</td>
+        <td>{{user.phone3}}</td>
+    </tr>
+
+  </table>
   
       <p class=" mb-4 font-bold text-1xl">You currently have {{users.length}} Records stored locally, please click on submit to upload</p>
   
@@ -54,10 +77,12 @@ export default {
                   sidebarToggle(){
                     this.visible = !this.visible
                   },
-                  async uploadData() {
+                  uploadData() {
                     if (localStorage.getItem("users")){
                       this.loadings = true;
                       this.users = JSON.parse(localStorage.getItem("users"))
+                      var formdata = new FormData();
+                      formdata.append('data', this.users);
                     // let res = await this.$axios.post("http://35.178.125.50/twilio/api/index.php", this.users)
                     // .catch(error => {
                     //   console.log(error);
@@ -65,28 +90,39 @@ export default {
                     // return res;
                     // 
 
-                      var optionAxios = {
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                            //http://35.178.125.50/twilio
-                        }
+                      // var optionAxios = {
+                      //       headers: {
+                      //           'Content-Type': 'application/json'
+                      //       }
+                      //       //http://35.178.125.50/twilio
+                      //http://127.0.0.1:8000/api/upload-pwa
+                      //   }https://avigohealth.com/twilio/api/
 
-                    this.$axios.post("https://avigohealth.com/twilio/api/", this.users, optionAxios)
-                          .then(response => {
+                    //await this.$axios.post("https://avigohealth.com/twilio/api/", this.users, optionAxios)
+                          
+                      fetch("https://avigohealth.com/twilio/api/", {
+                        method: "POST", 
+                        headers: {
+                           'Accept': 'application/json',
+                          'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(this.users)
+                        })
+                        .then(response =>{
                             this.loadings = false;
-                            console.log(response.data.message);
-                            if(response.data.message == "Upload successful."){
-
-                            Swal.fire(
+                            if(response.ok) {
+                              Swal.fire(
                             'Data Uploaded',
-                            response.data.message,
+                            'Upload successful.',
                             'success'
                             )
 
                             this.users = [];
-            
                             }
+                            console.log(response.json());
+                            // if(response.data.message == "Upload successful."){
+            
+                            // }
                           })
                           .catch(error => {
                             this.loadings = false;

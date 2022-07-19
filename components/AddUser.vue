@@ -7,7 +7,13 @@
           </h1>
       <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
         
-
+       
+	<!-- <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" v-on:click="myFunction()">Get Current Location</button>
+<div class="mb-4" v-if="lon">
+ <p>Lat = {{lat}} Lon ={{lon}}</p>
+ <a class="font-bold" :href="link">See Location on Map</a>
+	<p>{{error}}</p>
+</div> -->
 <form class="w-full" v-on:submit.prevent="addUser()" method="POST">
 
     <div class="flex flex-wrap -mx-3 mb-2">
@@ -107,8 +113,8 @@
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
         Mother's Name
       </label>
-      <input v-model="user.mother" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
-      
+      <input v-on:blur="validateMother" v-model="user.mother" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+      <p class="text-red-500 text-xs italic" v-show="errors.mother">{{errors.mother}}</p>
     </div>
     
   </div>
@@ -119,7 +125,7 @@
         Expected Date of Delivery (EDD)
       </label>
       <client-only>
-      <date-picker v-model="user.edd" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
+      <date-picker v-model="user.edd" :input-attr="{required: 'true'}" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
       class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-1.5 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required></date-picker>
       </client-only>
       <p class="text-red-500 text-xs italic" v-show="errors.edd">{{errors.edd}}</p>
@@ -199,6 +205,10 @@ export default {
                       previous: {},
                       errors: {},
                       isSuccess: false,
+                      lat:'',
+	                    lon:'',
+                      error:'',
+                      link:''
                   //     disabledDates: {
                   //   customPredictor: function(date) {
 
@@ -228,7 +238,7 @@ export default {
                       }
 
                       if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''
-                      && this.errors.phone3 == ''){
+                      && this.errors.phone3 == '' && this.errors.mother == ''){
                           this.$emit('add-user-event', this.user);
                         this.previous = this.user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -368,6 +378,15 @@ export default {
                       
                     }
                   },
+                  validateMother(mother){
+                    //  const rule = /^[a-zA-Z\-\']+$/;
+                     const rule = /^([A-z\'])*[^\s]$/;
+                      if(mother.target.value.match(rule)){
+                          this.errors.mother = '';
+                      }else{
+                          this.errors.mother = 'Please enter only Mothers first name';
+                      }
+                  },
                   disabledBeforeTodayAndAfter9Months(date) {
                       const today = new Date();
                       today.setHours(0, 0, 0, 0);
@@ -390,8 +409,22 @@ export default {
                     //alert('No matches');
                     return true;
                   },
+                  myFunction() {		
+                    if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(this.showPosition);
+                    }else{
+                    this.error = "Geolocation is not supported."; 
+                      
+                    }
+    },
+	showPosition(position) {	
+		this.lat = position.coords.latitude;
+		this.lon = position.coords.longitude;
+    this.link = "https://www.google.com/maps/search/?api=1&query="+this.lat+","+this.lon
+	}
                     
                   },
+                   
                   mounted(){
                       this.states = states;
                       if (localStorage.getItem("previous")){

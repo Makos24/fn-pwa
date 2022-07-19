@@ -53,18 +53,18 @@ export default {
     
   ],
   axios: {
-    baseUrl : process.server ? 'http://localhost:3000' : 'https://avigohealth.com/twilio/',
-    credentials: true,
-    proxy : true,
+    baseUrl : 'https://avigohealth.com/twilio/',
+    credentials: false,
+    proxy : false,
    // prefix: '/api',
   },
-  proxy: {
-    //'/api': 'http://35.178.125.50/twilio/',
-    '/api': {
-      target: process.server ? 'http://localhost:3000' : 'https://avigohealth.com/twilio/',
-      changeOrigin: true,
-    },
-  },
+  // proxy: {
+  //   //'/api': 'http://35.178.125.50/twilio/',
+  //   '/api': {
+  //     target: process.server ? 'http://localhost:3000' : 'https://avigohealth.com/twilio/',
+  //     changeOrigin: true,
+  //   },
+  // },
   
   pwa: {
     icon: true, // disables the icon module
