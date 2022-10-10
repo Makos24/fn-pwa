@@ -1,0 +1,15 @@
+[         
+            {"title":"Koranic","code":"01"},
+            {"title":"Primary","code":"02"},
+            {"title":"Middle","code":"03"},
+            {"title":"Modern","code":"03"},
+            {"title":"Secondary","code":"04"},
+            {"title":"Teach. Train","code":"04"},
+            {"title":"Higher School","code":"05"},
+            {"title":"Advance GCE","code":"05"},
+            {"title":"Polytecnics","code":"06"},
+            {"title":"NCE","code":"06"},
+            {"title":"HND","code":"06"},
+            {"title":"University","code":"07"},
+            {"title":"No Education","code":"08"}
+]

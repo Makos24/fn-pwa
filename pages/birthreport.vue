@@ -2,7 +2,7 @@
 
 <div>
   <div class="loader" v-if="loadings"></div>
-<div  v-show="users.length">
+<div  v-show="births.length">
   <!-- <button  v-on:click="sidebarToggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Sidebar
   </button> -->
@@ -18,7 +18,7 @@
       <th>Contact 3</th>
     </tr>
 
-    <tr v-for="user in users">
+    <tr v-for="user in births">
         <td>{{user.name}}</td>
         <td>{{user.phone}}</td>
         <td>{{user.mother}}</td>
@@ -30,7 +30,7 @@
 
   </table> -->
   
-      <p class=" mb-4 font-bold text-1xl">You currently have {{users.length}} Records stored locally, please click on submit to upload</p>
+      <p class=" mb-4 font-bold text-1xl">You currently have {{births.length}} Records stored locally, please click on submit to upload</p>
   
     <button v-on:click="uploadData" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Submit Captured Data
@@ -39,13 +39,13 @@
 <div class="flex mt-8">
   
 <div v-show="visible" class="flex-col justify-between w-1/4 text-center">
-  <p class=" mb-4 font-bold text-2xl">{{users.length}} Records</p>
+  <p class=" mb-4 font-bold text-2xl">{{births.length}} Records</p>
      
       
 </div>
 
   <div class="flex-col justify-between w-full">
-  <AddUser v-on:add-user-event="addUserRecord" />
+  <AddBirth v-on:add-birth-event="addBirthRecord" />
   </div>
   
 </div>
@@ -56,12 +56,12 @@
 
 <script>
 import swal from 'sweetalert2';
-import { mapGetters } from 'vuex'
+import AddBirth from '../components/AddBirth.vue';
 
 // import Navbar from '../components/Navbar.vue';
 window.Swal = swal;
 export default {
-    middleware: 'auth',
+    middleware: "auth",
     //name: Prereg,
     //props: ["user"],
     data() {
@@ -69,25 +69,25 @@ export default {
             loading: true,
             loadings: false,
             visible: false,
-            users: [],
+            births: [],
             isSuccess: false
         };
     },
     methods: {
-        addUserRecord(newUser) {
-            //console.log(newUser)
-            this.users = [...this.users, newUser];
+        addBirthRecord(newBirth) {
+            //console.log(newBirth)
+            this.births = [...this.births, newBirth];
         },
         sidebarToggle() {
             this.visible = !this.visible;
         },
-        async uploadData() {
-            if (localStorage.getItem("users")) {
+        uploadData() {
+            if (localStorage.getItem("births")) {
                 this.loadings = true;
-                this.users = JSON.parse(localStorage.getItem("users"));
+                this.births = JSON.parse(localStorage.getItem("births"));
                 var formdata = new FormData();
-                formdata.append("data", this.users);
-                // let res = await this.$axios.post("http://35.178.125.50/twilio/api/index.php", this.users)
+                formdata.append("data", this.births);
+                // let res = await this.$axios.post("http://35.178.125.50/twilio/api/index.php", this.births)
                 // .catch(error => {
                 //   console.log(error);
                 // })
@@ -100,35 +100,22 @@ export default {
                 //       //http://35.178.125.50/twilio
                 //http://127.0.0.1:8000/api/upload-pwa
                 //   }https://avigohealth.com/twilio/api/
-                //await this.$axios.post("https://avigohealth.com/twilio/api/", this.users, optionAxios)
-                // fetch("http://127.0.0.1:8000/api/upload-pwa", {
-                //     method: "POST",
-                //     headers: {
-                //         "Accept": "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     body: JSON.stringify(this.users)
-                // })
-                
-                await this.$axios.post(process.env.baseUrl+"/api/upload-pwa",
-                    JSON.stringify(this.users)
-                )
-                .then(response => {
+                //await this.$axios.post("https://avigohealth.com/twilio/api/", this.births, optionAxios)
+                fetch(process.env.baseUrl+"/api/upload-births", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(this.births)
+                })
+                    .then(response => {
                     this.loadings = false;
-                    if (response.data.msg == "Upload successful.") {
+                    if (response.ok) {
                         Swal.fire("Data Uploaded", "Upload successful.", "success");
-
-                        this.$axios.post("/api/birth",
-                            JSON.stringify(this.users)
-                        ).then(res => {
-                            console.log(res);
-                            //this.users = [];
-                        }).catch(e => {
-                            console.log(e);
-                        })
-                       
+                        this.births = [];
                     }
-                    console.log(response.data);
+                    console.log(response.json());
                     // if(response.data.message == "Upload successful."){
                     // }
                 })
@@ -141,31 +128,24 @@ export default {
             }
         },
     },
-    mounted() {
-        if (localStorage.getItem("users")) {
-            this.users = JSON.parse(localStorage.getItem("users"));
-        }
-        
-        // if(this.$auth.user && !this.$auth.user.first_name){
-        //     this.$router.push('/updateprofile')
-        // }
-    },
-    computed: {
-
-    ...mapGetters(['loggedInUser'])
-
-  },
     watch: {
-        users: {
+        births: {
             handler() {
-                localStorage.setItem("users", JSON.stringify(this.users));
+                localStorage.setItem("births", JSON.stringify(this.births));
             },
             deep: true
         }
     },
-   
-    // components: { Navbar }
+    mounted() {
+        if (localStorage.getItem("births")) {
+            this.births = JSON.parse(localStorage.getItem("births"));
+        }
+    },
+    components: { AddBirth }
 } 
+                  
+                
+
 </script>
 
 <style scoped>
@@ -177,7 +157,7 @@ export default {
     width:100%;
     height:100%;
     background-color:#eceaea;
-    background-image: url('/pwa2/loader.gif');
+    background-image: url('/pwa/loader.gif');
     background-size: 100px;
     background-repeat:no-repeat;
     background-position:center;
