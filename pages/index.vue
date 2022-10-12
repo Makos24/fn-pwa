@@ -101,38 +101,29 @@ export default {
                 //http://127.0.0.1:8000/api/upload-pwa
                 //   }https://avigohealth.com/twilio/api/
                 //await this.$axios.post("https://avigohealth.com/twilio/api/", this.users, optionAxios)
-                // fetch("http://127.0.0.1:8000/api/upload-pwa", {
-                //     method: "POST",
-                //     headers: {
-                //         "Accept": "application/json",
-                //         "Content-Type": "application/json"
-                //     },
-                //     body: JSON.stringify(this.users)
-                // })
+                await fetch(process.env.baseUrl+"/api/upload-pwa", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(this.users)
+                })
                 
-                await this.$axios.post(process.env.baseUrl+"/api/upload-pwa",
-                    JSON.stringify(this.users)
-                )
+                // await this.$axios.post(process.env.baseUrl+"/api/upload-pwa",
+                //     JSON.stringify(this.users)
+                // )
                 .then(response => {
                     this.loadings = false;
-                    if (response.data.msg == "Upload successful.") {
+                    //if (response.msg == "Upload successful.") {
+                    if(response.ok) {
                         Swal.fire("Data Uploaded", "Upload successful.", "success");
-
-                        this.$axios.post("/api/birth",
-                            JSON.stringify(this.users)
-                        ).then(res => {
-                            console.log(res);
-                            //this.users = [];
-                        }).catch(e => {
-                            console.log(e);
-                        })
                        
                     }
-                    console.log(response.data);
+                    console.log(response.json());
                     // if(response.data.message == "Upload successful."){
                     // }
-                })
-                    .catch(error => {
+                }).catch(error => {
                     this.loadings = false;
                     this.errorMessage = error.message;
                     Swal.fire("Failed!", error.message, "error");

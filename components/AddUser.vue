@@ -54,7 +54,7 @@
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-            National ID<span class="text-red-500">*</span>
+            National ID<span class="text-red-500"></span>
           </label>
           <input v-on:blur="validateNin" v-model="user.mnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.mnin">{{errors.mnin}}</p>
@@ -186,14 +186,30 @@
 
 
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Occupation Category<span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <select v-model="user.moccupation_cat" @change="loadOccupation1" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+              <option>Select</option>
+              <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Occupation <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <select v-model="user.moccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option>Select</option>
-              <option v-for="ocu in occupation" v-bind:value="ocu.code">{{ocu.title}}</option>
+              <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -278,19 +294,6 @@
 
 
       <div class="flex flex-wrap -mx-3 mb-2">
-      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-            Registration Centre <span class="text-red-500">*</span>
-          </label>
-          <div class="relative">
-            <select v-model="user.centre" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-settlement" required>
-              <option v-for="phc in phcs" v-bind:value="phc.SN">{{phc.Name}}</option>
-            </select>
-            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-            </div>
-          </div>
-        </div>
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Village From <span class="text-red-500">*</span>
@@ -387,7 +390,7 @@
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-            National ID <span class="text-red-500">*</span>
+            National ID <span class="text-red-500"></span>
           </label>
           <input v-on:blur="validateNin" v-model="user.fnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.fnin">{{errors.fnin}}</p>
@@ -396,7 +399,13 @@
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-full px-3 mb-6 md:mb-0">
+        <div class="flex items-start mb-6">
+            <div class="flex items-center h-5">
+            <input id="same_address" type="checkbox" v-model="checked" @click="sameAddress" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" >
+            </div>
+            <label for="same_address" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Is address same as Mother?</label>
+        </div>
+        <div v-show="!checked" class="w-full md:w-full px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Address <span class="text-red-500">*</span> <small>Place of residence</small>
           </label>
@@ -460,7 +469,7 @@
             State of Origin <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fstater" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="user.fstate" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="state in states" v-bind:value="state.SN">{{state.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -520,14 +529,30 @@
 
 
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full px-3">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Occupation Category<span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <select v-model="user.foccupation_cat" @change="loadOccupation2" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+              <option>Select</option>
+              <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Occupation <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <select v-model="user.foccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option>Select</option>
-              <option v-for="ocu in occupation" v-bind:value="ocu.code">{{ocu.title}}</option>
+              <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -569,7 +594,7 @@
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-            National ID <span class="text-red-500">*</span>
+            National ID <span class="text-red-500"></span>
           </label>
           <input v-on:blur="validateNin" v-model="user.inin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.inin">{{errors.inin}}</p>
@@ -647,7 +672,8 @@
  import phcs from '~/static/phc.json'
  import tribes from '~/static/tribes.json'
  import education from '~/static/education.json'
- import occupation from '~/static/occupation.json'
+ import occupation_categories from '~/static/occupation_category.json'
+ import occupations from '~/static/occupation.json'
 //  import centres from '~/static/occupation.json'
  import swal from 'sweetalert2';
 window.Swal = swal;
@@ -667,7 +693,8 @@ export default {
                       phcs : [],
                       tribes : [],
                       education : [],
-                      occupation : [],
+                      occupation_categories : [],
+                      occupations : [],
                       centres : [],
                       previous: {},
                       errors: {},
@@ -675,6 +702,7 @@ export default {
                       lat:'',
 	                    lon:'',
                       error:'',
+                      checked:false,
                       link:''
                   //     disabledDates: {
                   //   customPredictor: function(date) {
@@ -696,7 +724,7 @@ export default {
 
 //console.log(this.user);
                         if(this.step == 1){
-                          if(this.user.mfname == undefined || this.user.mmname == undefined || this.user.msname == undefined || this.user.mphone == undefined || this.user.maddress == undefined || this.user.mnin == undefined || 
+                          if(this.user.mfname == undefined || this.user.mmname == undefined || this.user.msname == undefined || this.user.mphone == undefined || this.user.maddress == undefined || 
                             this.user.mdob == undefined || this.user.mstatus == undefined || this.user.mnationality == undefined || this.user.methnicity == undefined || 
                             this.user.mliteracy == undefined || this.user.meducation == undefined || this.user.moccupation == undefined || this.user.phc == undefined || 
                             this.user.edd == undefined || this.user.phone1 == undefined){
@@ -714,7 +742,7 @@ export default {
                           
                         }else if(this.step == 2){
 
-                            if(this.user.ffname == undefined || this.user.fmname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || this.user.fnin == undefined || 
+                            if(this.user.ffname == undefined || this.user.fmname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
                             this.user.fdob == undefined || this.user.fstatus == undefined || this.user.fnationality == undefined || this.user.fethnicity == undefined || 
                             this.user.fliteracy == undefined || this.user.feducation == undefined || this.user.foccupation == undefined){
 
@@ -806,6 +834,16 @@ export default {
                   loadPhc(){
                       if(this.user.settlement != ''){
                            this.phcs = phcs.filter(phc => phc.WardID == this.user.ward)
+                      }
+                  },
+                  loadOccupation1(){
+                      if(this.user.moccupation_categories != ''){
+                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.user.moccupation_cat)
+                      }
+                  },
+                  loadOccupation2(){
+                      if(this.user.foccupation_categories != ''){
+                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.user.foccupation_cat)
                       }
                   },
                   validateNin(){
@@ -938,6 +976,14 @@ export default {
                     //alert('No matches');
                     return true;
                   },
+                  sameAddress(){
+                    console.log(this.checked)
+                    if(this.checked == true){
+                      this.faddress = this.maddress;
+                    }else{
+                      this.user.faddress = '';
+                    }
+                  },
                   myFunction() {		
                     if(navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(this.showPosition);
@@ -950,30 +996,39 @@ export default {
 		this.lat = position.coords.latitude;
 		this.lon = position.coords.longitude;
     this.link = "https://www.google.com/maps/search/?api=1&query="+this.lat+","+this.lon
-	}
-                    
-                  },
-                   
-                  mounted(){
-                      this.states = states;
-                      this.tribes = tribes;
-                      this.education = education;
-                      this.occupation = occupation;
-                      if (localStorage.getItem("previous")){
-                          this.previous = JSON.parse(localStorage.getItem("previous"))
-                        this.user.state = this.previous.state;
-                        this.user.lga = this.previous.lga;
-                        this.user.ward = this.previous.ward;
-                        this.user.settlement = this.previous.settlement;
-                        this.user.phc = this.previous.phc;
-                        this.loadLga();
-                        this.loadWard();
-                        this.loadSettlements();
-                        this.loadPhc();
-                        }
-                        
-                  } 
-                  } 
+	
+  }
+ },
+        mounted(){
+          this.states = states;
+          this.tribes = tribes;
+          this.education = education;
+          this.occupation_categories = occupation_categories;
+          this.occupations = occupations;
+          this.user.mdob = "2000-01-01";
+          this.user.fdob = "2000-01-01";
+          this.user.mstate = 15;
+          this.user.methnicity = "08";
+          this.user.fstate = 15;
+          this.user.fethnicity = "08";
+
+          if (localStorage.getItem("previous")){
+              this.previous = JSON.parse(localStorage.getItem("previous"))
+              this.user.state = this.previous.state;
+              this.user.lga = this.previous.lga;
+              this.user.ward = this.previous.ward;
+              this.user.settlement = this.previous.settlement;
+              this.user.phc = this.previous.phc;
+            
+              this.loadLga();
+              this.loadWard();
+              this.loadSettlements();
+              this.loadPhc();
+            }
+            
+      } 
+                  
+    } 
  
  
                 

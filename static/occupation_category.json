@@ -1,0 +1,19 @@
+[
+    {"id":"1","title":"Not Gainfully Employed"},
+    {"id":"2","title":"Author\/Press"},
+    {"id":"3","title":"Engineer"},
+    {"id":"4","title":"Medical Personnel"},
+    {"id":"5","title":"Employees of  Religious Bodies"},
+    {"id":"6","title":"Educationist"},
+    {"id":"7","title":"Professional"},
+    {"id":"8","title":"Admin Worker"},
+    {"id":"9","title":"Owner & Director of Business Concern"},
+    {"id":"10","title":"Commercial"},
+    {"id":"11","title":"Oil Field Worker"},
+    {"id":"12","title":"Transport"},
+    {"id":"13","title":"Personal Service"},
+    {"id":"14","title":"Craftman\/Labourer"},
+    {"id":"15","title":"Public Service"},
+    {"id":"16","title":"Classified Occupation"},
+    {"id":"17","title":"Otherwise"}
+    ]

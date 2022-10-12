@@ -10,6 +10,7 @@ export default {
   },
   env: {
     baseUrl: process.env.BASE_URL || 'https://avigohealth.com/avigo-laravel'
+   // baseUrl: process.env.BASE_URL || 'http://localhost:8000'
   },
 
   
