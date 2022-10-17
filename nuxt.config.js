@@ -9,8 +9,8 @@ export default {
     // middleware: ['auth']
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'https://avigohealth.com/avigo-laravel'
-   // baseUrl: process.env.BASE_URL || 'http://localhost:8000'
+    //baseUrl: process.env.BASE_URL || 'https://avigohealth.com/avigo-laravel'
+   baseUrl: process.env.BASE_URL || 'http://localhost:8000'
   },
 
   

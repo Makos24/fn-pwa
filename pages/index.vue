@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex'
 // import Navbar from '../components/Navbar.vue';
 window.Swal = swal;
 export default {
-    middleware: 'auth',
+    //middleware: 'auth',
     //name: Prereg,
     //props: ["user"],
     data() {
@@ -81,27 +81,13 @@ export default {
         sidebarToggle() {
             this.visible = !this.visible;
         },
-        async uploadData() {
+        uploadData() {
             if (localStorage.getItem("users")) {
                 this.loadings = true;
                 this.users = JSON.parse(localStorage.getItem("users"));
-                var formdata = new FormData();
-                formdata.append("data", this.users);
-                // let res = await this.$axios.post("http://35.178.125.50/twilio/api/index.php", this.users)
-                // .catch(error => {
-                //   console.log(error);
-                // })
-                // return res;
-                // 
-                // var optionAxios = {
-                //       headers: {
-                //           'Content-Type': 'application/json'
-                //       }
-                //       //http://35.178.125.50/twilio
-                //http://127.0.0.1:8000/api/upload-pwa
-                //   }https://avigohealth.com/twilio/api/
-                //await this.$axios.post("https://avigohealth.com/twilio/api/", this.users, optionAxios)
-                await fetch(process.env.baseUrl+"/api/upload-pwa", {
+                
+               
+                fetch(process.env.baseUrl+"/api/upload-pwa", {
                     method: "POST",
                     headers: {
                         "Accept": "application/json",
@@ -109,21 +95,22 @@ export default {
                     },
                     body: JSON.stringify(this.users)
                 })
-                
-                // await this.$axios.post(process.env.baseUrl+"/api/upload-pwa",
-                //     JSON.stringify(this.users)
-                // )
                 .then(response => {
                     this.loadings = false;
-                    //if (response.msg == "Upload successful.") {
-                    if(response.ok) {
+                    return response.json();
+                }).then(data => {
+                    if(data.msg == "Upload successful.") {
                         Swal.fire("Data Uploaded", "Upload successful.", "success");
-                       
+                        this.users = [];
+                        console.log(data.data)
+                        if(data.data.length > 0){
+                            localStorage.setItem("edds", JSON.stringify(data.data));
+                        }
+                        
                     }
-                    console.log(response.json());
-                    // if(response.data.message == "Upload successful."){
-                    // }
-                }).catch(error => {
+                    
+                })
+                .catch(error => {
                     this.loadings = false;
                     this.errorMessage = error.message;
                     Swal.fire("Failed!", error.message, "error");

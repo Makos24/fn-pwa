@@ -309,7 +309,7 @@
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Expected Date of Delivgery (EDD) <span class="text-red-500">*</span>
+            Expected Date of Delivery (EDD) <span class="text-red-500">*</span>
           </label>
           <client-only>
           <date-picker v-model="user.edd" :input-attr="{required: 'true'}" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
@@ -392,7 +392,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             National ID <span class="text-red-500"></span>
           </label>
-          <input v-on:blur="validateNin" v-model="user.fnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+          <input v-on:blur="validateNin" v-model="user.fnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
             <p class="text-red-500 text-xs italic" v-show="errors.fnin">{{errors.fnin}}</p>
         </div>
         
@@ -409,7 +409,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Address <span class="text-red-500">*</span> <small>Place of residence</small>
           </label>
-          <textarea v-model="user.faddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required></textarea>
+          <textarea v-model="user.faddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder=""></textarea>
           
         </div>
         
@@ -978,8 +978,8 @@ export default {
                   },
                   sameAddress(){
                     console.log(this.checked)
-                    if(this.checked == true){
-                      this.faddress = this.maddress;
+                    if(this.checked != true){
+                      this.user.faddress = this.user.maddress;
                     }else{
                       this.user.faddress = '';
                     }
