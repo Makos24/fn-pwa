@@ -2,8 +2,12 @@
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-      <h1 class="flex justify-center pt-8 sm:pt-0 text-4xl leading-7 font-bold mt-4">
-        Preregistration Form
+      <h1 v-if="step == 1" class="flex justify-center pt-8 sm:pt-0 text-2xl leading-5 font-bold mt-4">
+        Form B1 - Particulars of Mother
+          </h1>
+
+          <h1 v-if="step == 2" class="flex justify-center pt-8 sm:pt-0 text-2xl leading-5 font-bold mt-4">
+            Form B1 - Particulars of Father
           </h1>
       <div class="mt-8 bg-white overflow-hidden shadow sm:rounded-lg p-6">
         
@@ -17,7 +21,7 @@
 <form class="w-full" v-on:submit.prevent="addUser()" method="POST">
 
     <section v-if="step == 1">
-     <h1>Particulars of Mother</h1>
+     
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -28,9 +32,9 @@
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-            Middle Name  <span class="text-red-500">*</span>
+            Middle Name  <span class="text-red-500"></span>
           </label>
-          <input v-model="user.mmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="user.mmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
           
         </div>
 
@@ -87,7 +91,7 @@
           </label>
           <div class="relative">
             <select v-model="user.mstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Married</option>
               <option value="2">Single</option>
               <option value="3">Widowed</option>
@@ -100,7 +104,7 @@
           </div>
         </div>
         
-      </div>
+   </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
@@ -109,7 +113,7 @@
           </label>
           <div class="relative">
             <select v-model="user.mnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Nigerian</option>
               <option value="2">Non Nigerian</option>
             </select>
@@ -118,9 +122,9 @@
             </div>
           </div>
         </div>
-      </div>
+  </div>
 
-      <div class="flex flex-wrap -mx-3 mb-6" >
+      <div v-if="user.mnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             State of Origin <span class="text-red-500">*</span>
@@ -158,7 +162,7 @@
           </label>
           <div class="relative">
             <select v-model="user.mliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-               <option>Select</option>
+               <option value="">Select</option>
               <option value="1">Literate</option>
               <option value="2">Illiterate</option>
             </select>
@@ -168,7 +172,7 @@
           </div>
         </div>
 
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+  <div v-if="user.mliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Level of Education <span class="text-red-500">*</span>
           </label>
@@ -182,17 +186,17 @@
           </div>
         </div>
         
-      </div>
+  </div>
 
 
-      <div class="flex flex-wrap -mx-3 mb-6">
+  <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Occupation Category<span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <select v-model="user.moccupation_cat" @change="loadOccupation1" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -208,7 +212,7 @@
           </label>
           <div class="relative">
             <select v-model="user.moccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -270,6 +274,7 @@
           <div class="relative">
             <select v-on:change="loadPhc" v-model="user.settlement" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-settlement" required>
               <option v-for="settlement in settlements" v-bind:value="settlement.SN">{{settlement.Settlement}}</option>
+              <option value="0">Other</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -283,6 +288,7 @@
           <div class="relative">
             <select v-model="user.phc" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state5" required>
               <option v-for="phc in phcs" v-bind:value="phc.SN">{{phc.Name}}</option>
+              <option value="0">Other</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -294,16 +300,32 @@
 
 
       <div class="flex flex-wrap -mx-3 mb-2">
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <div v-if="user.settlement == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-            Village From <span class="text-red-500">*</span>
+            Specify Settlement <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.village" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="text" placeholder="" required>
+          <input v-model="user.settlement_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="errors.settlement_other">{{errors.settlement_other}}</p>
+        </div>
+        <div v-if="user.phc == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+            Specify Catchment Health Facilty <span class="text-red-500">*</span>
+          </label>
+          <input v-model="user.phc_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="errors.phc_other">{{errors.phc_other}}</p>
         </div>
         
       </div>
 
-
+      <!-- <div class="flex flex-wrap -mx-3 mb-2">
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+            Village/ Town <span class="text-red-500">*</span>
+          </label>
+          <input v-model="user.village" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="text" placeholder="" required>
+        </div>
+        
+      </div> -->
       
 
     <div class="flex flex-wrap -mx-3 mb-6">
@@ -342,7 +364,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Contact's Phone number Three
           </label>
-          <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="tel" placeholder="" required>
+          <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="tel" placeholder="" >
           <p class="text-red-500 text-xs italic" v-show="errors.phone3">{{errors.phone3}}</p>
         </div>
       </div>
@@ -350,8 +372,7 @@
     <section v-if="step == 2">
       <h1>Step 2</h1>
 
-    <h1>Particulars of Father</h1>
-
+    
 
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -363,9 +384,9 @@
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
-            Middle Name  <span class="text-red-500">*</span>
+            Middle Name  <span class="text-red-500"></span>
           </label>
-          <input v-model="user.fmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="user.fmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
           
         </div>
 
@@ -430,7 +451,7 @@
           </label>
           <div class="relative">
             <select v-model="user.fstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Married</option>
               <option value="2">Single</option>
               <option value="3">Widowed</option>
@@ -452,7 +473,7 @@
           </label>
           <div class="relative">
             <select v-model="user.fnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Nigerian</option>
               <option value="2">Non Nigerian</option>
             </select>
@@ -463,7 +484,7 @@
         </div>
       </div>
 
-      <div class="flex flex-wrap -mx-3 mb-6" >
+      <div v-if="user.fnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             State of Origin <span class="text-red-500">*</span>
@@ -501,7 +522,7 @@
           </label>
           <div class="relative">
             <select v-model="user.fliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-               <option>Select</option>
+               <option value="">Select</option>
               <option value="1">Literate</option>
               <option value="2">Illiterate</option>
             </select>
@@ -511,7 +532,7 @@
           </div>
         </div>
 
-        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div v-if="user.fliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Level of Education <span class="text-red-500">*</span>
           </label>
@@ -535,7 +556,7 @@
           </label>
           <div class="relative">
             <select v-model="user.foccupation_cat" @change="loadOccupation2" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -551,7 +572,7 @@
           </label>
           <div class="relative">
             <select v-model="user.foccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -610,7 +631,7 @@
           </label>
           <div class="relative">
             <select v-model="user.relationship" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Father</option>
               <option value="2">Mother</option>
               <option value="3">Brother</option>
@@ -724,7 +745,7 @@ export default {
 
 //console.log(this.user);
                         if(this.step == 1){
-                          if(this.user.mfname == undefined || this.user.mmname == undefined || this.user.msname == undefined || this.user.mphone == undefined || this.user.maddress == undefined || 
+                          if(this.user.mfname == undefined || this.user.msname == undefined || this.user.mphone == undefined || this.user.maddress == undefined || 
                             this.user.mdob == undefined || this.user.mstatus == undefined || this.user.mnationality == undefined || this.user.methnicity == undefined || 
                             this.user.mliteracy == undefined || this.user.meducation == undefined || this.user.moccupation == undefined || this.user.phc == undefined || 
                             this.user.edd == undefined || this.user.phone1 == undefined){
@@ -742,7 +763,7 @@ export default {
                           
                         }else if(this.step == 2){
 
-                            if(this.user.ffname == undefined || this.user.fmname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
+                            if(this.user.ffname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
                             this.user.fdob == undefined || this.user.fstatus == undefined || this.user.fnationality == undefined || this.user.fethnicity == undefined || 
                             this.user.fliteracy == undefined || this.user.feducation == undefined || this.user.foccupation == undefined){
 
@@ -792,6 +813,17 @@ export default {
 
                       if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''
                       && this.errors.phone3 == ''){
+
+                        if(this.user.fmname == undefined){
+                          this.user.fmname == '';
+                        }
+
+                        if(this.user.mmname == undefined){
+                          this.user.mmname == '';
+                        }
+            
+
+
                           this.$emit('add-user-event', this.user);
                         this.previous = this.user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))

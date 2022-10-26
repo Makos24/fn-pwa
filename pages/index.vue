@@ -61,7 +61,7 @@ import { mapGetters } from 'vuex'
 // import Navbar from '../components/Navbar.vue';
 window.Swal = swal;
 export default {
-    //middleware: 'auth',
+    middleware: 'auth',
     //name: Prereg,
     //props: ["user"],
     data() {

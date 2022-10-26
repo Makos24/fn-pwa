@@ -3,32 +3,6 @@
 <div>
   <div class="loader" v-if="loadings"></div>
 <div  v-show="births.length">
-  <!-- <button  v-on:click="sidebarToggle" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-        Sidebar
-  </button> -->
-
-  <!-- <table>
-    <tr>
-      <th>Father</th>
-      <th>Phone</th>
-      <th>Mother</th>
-      <th>EDD</th>
-      <th>Contact 1</th>
-      <th>Contact 2</th>
-      <th>Contact 3</th>
-    </tr>
-
-    <tr v-for="user in births">
-        <td>{{user.name}}</td>
-        <td>{{user.phone}}</td>
-        <td>{{user.mother}}</td>
-        <td>{{user.edd}}</td>
-        <td>{{user.phone1}}</td>
-        <td>{{user.phone2}}</td>
-        <td>{{user.phone3}}</td>
-    </tr>
-
-  </table> -->
   
       <p class=" mb-4 font-bold text-1xl">You currently have {{births.length}} Records stored locally, please click on submit to upload</p>
   
@@ -142,9 +116,7 @@ export default {
         }
     },
     components: { AddBirth }
-} 
-                  
-                
+}                                 
 
 </script>
 

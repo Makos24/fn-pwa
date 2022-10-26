@@ -72,11 +72,8 @@ export default {
           this.$auth.$storage.setUniversal('user', user, true) // setting user in Vuex, cookies and localstorage
 
           user = this.$auth.$storage.getUniversal('user') // getting user (you can use it anywhere in your app)
-          //console.log(user) // checking user;
-
-         
-          // if(res.status != 200){
-          //   Swal.fire("Failed!", res.status, "error");
+          
+          this.$auth.$storage.setCookie('remember_expires', 30, { expires: 30 });
           // }
         this.$router.push('/')
           
