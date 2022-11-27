@@ -6,7 +6,7 @@ export default {
   target: 'static',
   router: {
     base: '/pwa2/',
-    // middleware: ['auth']
+    middleware: ['remember']
   },
   env: {
     baseUrl: process.env.BASE_URL || 'https://avigohealth.com/avigo-laravel'

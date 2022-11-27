@@ -26,7 +26,7 @@
           </label>
           <div class="relative">
             <select v-model="birth.type" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Single</option>
               <option value="2">Multiple</option>
             </select>
@@ -44,6 +44,48 @@
         </div>
         
       </div>
+
+      <div class="flex flex-wrap -mx-3 mb-6">
+        
+        <div class="w-full md:w-1/2 px-3">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+            Village/Town of Birth <small>(where the birth occured)</small>
+          </label>
+          <input v-model="birth.location" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" required>
+            <p class="text-red-500 text-xs italic" v-show="errors.no">{{errors.no}}</p>
+        </div>
+
+        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+           Type of Location of Birth <small>(Village/Town)</small>
+          </label>
+          <div class="relative">
+            <select v-model="birth.location_type" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+              <option value="">Select</option>
+              <option value="1">Village</option>
+              <option value="2">Town</option>
+            </select>
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+              <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+            </div>
+          </div>         
+        </div>
+        
+      </div>
+
+      <div class="flex flex-wrap -mx-3 mb-6">
+        
+        <div class="w-full md:w-1/2 px-3">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+            Birth Order <small>(Position of child/children)</small>
+          </label>
+          <input v-model="birth.order" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" required>
+            <p class="text-red-500 text-xs italic" v-show="errors.no">{{errors.no}}</p>
+        </div>
+        
+        
+      </div>
+
       <span v-if="birth.type == 1">
       <div class="w-full px-3 mb-6 md:mb-0">
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -60,7 +102,7 @@
           </label>
           <div class="relative">
             <select v-model="birth.gender" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
               
@@ -89,7 +131,7 @@
           </label>
           <div class="relative">
             <select v-model="birth.place" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Maternity Home</option>
               <option value="2">Hospital</option>
               <option value="3">At Home</option>
@@ -106,7 +148,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Others Specify
           </label>
-          <input v-model="birth.other_place" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
+          <input v-model="birth.place_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
             <p class="text-red-500 text-xs italic" v-show="errors.other_place">{{errors.other_place}}</p>
         </div>
         
@@ -133,7 +175,7 @@
           </label>
           <div class="relative">
             <select v-model="birth.place" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Maternity Home</option>
               <option value="2">Hospital</option>
               <option value="3">At Home</option>
@@ -150,7 +192,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Others Specify
           </label>
-          <input v-model="birth.other_place" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
+          <input v-model="birth.place_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
             <p class="text-red-500 text-xs italic" v-show="errors.other_place">{{errors.other_place}}</p>
         </div>
         
@@ -175,7 +217,7 @@
           </label>
           <div class="relative">
             <select v-model="gender[n]" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
-              <option>Select</option>
+              <option value="">Select</option>
               <option value="1">Male</option>
               <option value="2">Female</option>
               
@@ -278,12 +320,16 @@ export default {
                           let birth = {};
                           birth.type = this.birth.type;
                           birth.place = this.birth.place;
+                          birth.place_other = this.birth.place_other;
                           birth.dob = this.birth.dob;
                           birth.edd = this.birth.edd;
                           birth.name = this.name[i];
                           birth.gender = this.gender[i];
-                          let o = i;
-                          birth.order = o+1;
+                          //let o = i;
+                          birth.order = this.birth.order;
+                          birth.no = this.birth.no;
+                          birth.location = this.birth.location;
+                          birth.location_type = this.birth.location_type;
 
                         this.$emit('add-birth-event', birth);
                          

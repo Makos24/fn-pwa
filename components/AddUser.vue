@@ -21,6 +21,27 @@
 <form class="w-full" v-on:submit.prevent="addUser()" method="POST">
 
     <section v-if="step == 1">
+
+      <div class="flex items-start mb-3">
+            <label for="phone" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Do you or your husband have a mobile phone?</label>
+        </div>
+
+      <div class="flex flex-wrap mb-6">
+
+       
+        <div class="w-full md:w-full px-3 mb-6 md:mb-0">
+            <input id="hphone" type="radio" @click="hasPhone" v-model="hphone" value="1" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" >
+            <label for="yes" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Yes</label>
+        </div>
+
+        <div class="w-full md:w-full px-3 mb-6 md:mb-0">
+            <input id="hphone" type="radio" @click="hasPhone" v-model="hphone" value="0" class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" >
+            <label for="no" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">No</label>
+        </div>
+       
+        
+      </div>
+      
      
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -49,12 +70,19 @@
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3">
+        <div v-if="hphone == 1" class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Phone Number<span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatePhone" v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
-            <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.mphone}}</p>
+          <input v-on:blur="validatemPhone" v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+            <p class="text-red-500 text-xs italic" v-show="errors.mphone">{{errors.mphone}}</p>
+        </div>
+        <div v-if="hphone == 0" class="w-full md:w-1/2 px-3">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+            Family Code<span class="text-red-500">*</span>
+          </label>
+          <input v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" readonly placeholder="" required>
+            <p class="text-red-500 text-xs italic">Please copy code and keep safe</p>
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
@@ -281,6 +309,19 @@
             </div>
           </div>
         </div>
+        <div v-if="user.settlement == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
+            Specify Settlement <span class="text-red-500">*</span>
+          </label>
+          <input v-model="user.settlement_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="errors.settlement_other">{{errors.settlement_other}}</p>
+        </div>
+        
+        
+      </div>
+
+
+      <div class="flex flex-wrap -mx-3 mb-2">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Catchment Health Facilty <span class="text-red-500">*</span>
@@ -294,18 +335,6 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
-        </div>
-        
-      </div>
-
-
-      <div class="flex flex-wrap -mx-3 mb-2">
-      <div v-if="user.settlement == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
-            Specify Settlement <span class="text-red-500">*</span>
-          </label>
-          <input v-model="user.settlement_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
-          <p class="text-red-500 text-xs italic" v-show="errors.settlement_other">{{errors.settlement_other}}</p>
         </div>
         <div v-if="user.phc == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
@@ -402,13 +431,22 @@
 
 
       <div class="flex flex-wrap -mx-3 mb-6">
-        <div class="w-full md:w-1/2 px-3">
+        <div v-if="hphone == 1" class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Phone Number <span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatePhone" v-model="user.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+          <input v-on:blur="validatefPhone" v-model="user.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.fphone">{{errors.fphone}}</p>
         </div>
+
+        <div v-if="hphone == 0" class="w-full md:w-1/2 px-3">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+            Family Code<span class="text-red-500">*</span>
+          </label>
+          <input v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" readonly placeholder="" required>
+            <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.mphone}}</p>
+        </div>
+
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             National ID <span class="text-red-500"></span>
@@ -706,6 +744,7 @@ export default {
                       step : 1,
                       totalsteps: 2,
                       loading: true,
+                      auth_user:'',
                       user: {},
                       states : [],
                       lgas : [],
@@ -724,6 +763,7 @@ export default {
 	                    lon:'',
                       error:'',
                       checked:false,
+                      hphone:1,
                       link:''
                   //     disabledDates: {
                   //   customPredictor: function(date) {
@@ -752,7 +792,7 @@ export default {
 
                             Swal.fire(
                             'Error!',
-                            'Please complete all required fields 1',
+                            'Please complete all required fields',
                             'error'
                             )
 
@@ -769,7 +809,7 @@ export default {
 
                             Swal.fire(
                             'Error!',
-                            'Please complete all required fields 2',
+                            'Please complete all required fields',
                             'error'
                             )
 
@@ -811,8 +851,19 @@ export default {
                             return false;
                       }
 
-                      if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''
-                      && this.errors.phone3 == ''){
+                      if(this.user.ffname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
+                            this.user.fdob == undefined || this.user.fstatus == undefined || this.user.fnationality == undefined || this.user.fethnicity == undefined || 
+                            this.user.fliteracy == undefined || this.user.feducation == undefined || this.user.foccupation == undefined){
+
+                            Swal.fire(
+                            'Error!',
+                            'Please complete all required fields',
+                            'error'
+                            )
+
+                        }
+
+                      if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''){
 
                         if(this.user.fmname == undefined){
                           this.user.fmname == '';
@@ -822,9 +873,10 @@ export default {
                           this.user.mmname == '';
                         }
             
+                        this.user.hphone = this.hphone;
 
-
-                          this.$emit('add-user-event', this.user);
+                        this.$emit('add-user-event', this.user);
+                        
                         this.previous = this.user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
                         this.user = {};
@@ -842,7 +894,7 @@ export default {
                       }else{
                           Swal.fire(
                             'Failed!',
-                            'Please correct any errors on the form',
+                            'Please complete all required fields',
                             'error'
                             )
                       }
@@ -881,15 +933,28 @@ export default {
                   validateNin(){
 
                   },
-                  validatePhone(phone){
+                  validatemPhone(phone){
                       //console.log(this.user.phone1);
 
                       //const rule = /^[0]\d{10}$/;
                       const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
                       if(phone.target.value.match(rule)){
-                          this.errors.phone = '';
+                          this.errors.mphone = '';
                       }else{
-                          this.errors.phone = 'Please enter a valid phone number';
+                          this.errors.mphone = 'Please enter a valid phone number';
+                      }
+
+                      
+                  },
+                  validatefPhone(fphone){
+                      //console.log(this.user.phone1);
+
+                      //const rule = /^[0]\d{10}$/;
+                      const rule = /(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/;
+                      if(fphone.target.value.match(rule)){
+                          this.errors.fphone = '';
+                      }else{
+                          this.errors.fphone = 'Please enter a valid phone number';
                       }
 
                       
@@ -905,7 +970,7 @@ export default {
                           this.errors.phone1 = 'Please enter a valid phone number';
                       }
 
-                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      var numbers = [this.user.mphone, this.user.phone1, this.user.phone2, this.user.phone3];
                       numbers = numbers.filter(val => val != undefined);
                       var numFlds = numbers.length;
 
@@ -1016,6 +1081,20 @@ export default {
                       this.user.faddress = '';
                     }
                   },
+                  hasPhone(){
+                    
+                    if(this.hphone == "1"){
+                      
+                      const date = new Date();
+
+                      this.user.mphone = "" + Math.floor(date.getTime() / 1000) + this.auth_user.id;
+                      this.user.fphone = "" + Math.floor(date.getTime() / 1000) + this.auth_user.id;
+
+                    }else{
+                      this.user.mphone = '';
+                      this.user.fphone = '';
+                    }
+                  },
                   myFunction() {		
                     if(navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(this.showPosition);
@@ -1043,6 +1122,9 @@ export default {
           this.user.methnicity = "08";
           this.user.fstate = 15;
           this.user.fethnicity = "08";
+
+          this.auth_user = this.$auth.user;
+          
 
           if (localStorage.getItem("previous")){
               this.previous = JSON.parse(localStorage.getItem("previous"))

@@ -70,6 +70,7 @@ export default {
             loadings: false,
             visible: false,
             users: [],
+            edds: [],
             isSuccess: false
         };
     },
@@ -104,7 +105,9 @@ export default {
                         this.users = [];
                         console.log(data.data)
                         if(data.data.length > 0){
-                            localStorage.setItem("edds", JSON.stringify(data.data));
+                            
+                            this.edds = this.edds.concat(data.data);
+                                                        
                         }
                         
                     }
@@ -124,6 +127,10 @@ export default {
             this.users = JSON.parse(localStorage.getItem("users"));
         }
         
+        if (localStorage.getItem("edds")) {
+            this.edds = JSON.parse(localStorage.getItem("edds"));
+        }
+
         // if(this.$auth.user && !this.$auth.user.first_name){
         //     this.$router.push('/updateprofile')
         // }
@@ -137,6 +144,12 @@ export default {
         users: {
             handler() {
                 localStorage.setItem("users", JSON.stringify(this.users));
+            },
+            deep: true
+        },
+        edds: {
+            handler() {
+                localStorage.setItem("edds", JSON.stringify(this.edds));
             },
             deep: true
         }
