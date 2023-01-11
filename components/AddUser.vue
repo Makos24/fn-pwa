@@ -48,14 +48,14 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             First Name  <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.mfname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
-          
+          <input v-model="muser.mfname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mfname.required">Mother's first name is required</p>
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Middle Name  <span class="text-red-500"></span>
           </label>
-          <input v-model="user.mmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
+          <input v-model="muser.mmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
           
         </div>
 
@@ -63,8 +63,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Surname  <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.msname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
-          
+          <input v-model="muser.msname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.msname.required">Mother's Surname is required</p>
+
         </div>
         
       </div>
@@ -74,21 +75,24 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Phone Number<span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatemPhone" v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+          <input v-on:blur="validatemPhone" v-model="muser.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.mphone">{{errors.mphone}}</p>
+            <!-- <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mphone.required">Mother's phone number is required</p>
+            <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mphone.mobile">Please provide a valid phone number</p>
+   -->
         </div>
         <div v-if="hphone == 0" class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Family Code<span class="text-red-500">*</span>
           </label>
-          <input v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" readonly placeholder="" required>
+          <input v-model="muser.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
             <p class="text-red-500 text-xs italic">Please copy code and keep safe</p>
         </div>
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             National ID<span class="text-red-500"></span>
           </label>
-          <input v-on:blur="validateNin" v-model="user.mnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+          <input v-on:blur="validateNin" v-model="muser.mnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.mnin">{{errors.mnin}}</p>
         </div>
         
@@ -99,8 +103,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Address<span class="text-red-500">*</span> <small>Place of residence</small>
           </label>
-          <textarea v-model="user.maddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required></textarea>
-          
+          <textarea v-model="muser.maddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required></textarea>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.maddress.required">Mother's Address is required</p>
+
         </div>
       </div>
 
@@ -109,8 +114,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Date of Birth <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.mdob" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="date" placeholder="" required>
-          <p class="text-red-500 text-xs italic" v-show="errors.mdob">{{errors.mdob}}</p>
+          <input v-model="muser.mdob" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="date" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mdob.required">Mother's Date of Birth is required</p>
+
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -118,7 +124,7 @@
             Marital Status <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.mstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.mstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option value="1">Married</option>
               <option value="2">Single</option>
@@ -130,6 +136,8 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mstatus.required">Mother's marital status is required</p>
+
         </div>
         
    </div>
@@ -140,7 +148,7 @@
             Nationality <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.mnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.mnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option value="1">Nigerian</option>
               <option value="2">Non Nigerian</option>
@@ -149,16 +157,18 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mnationality.required">Mother's Nationality is required</p>
+
         </div>
   </div>
 
-      <div v-if="user.mnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
+      <div v-if="muser.mnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             State of Origin <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.mstate" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.mstate" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="state in states" v-bind:value="state.SN">{{state.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -172,7 +182,7 @@
             Ethnic Origin <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.methnicity" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.methnicity" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="tribe in tribes" v-bind:value="tribe.code">{{tribe.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -189,7 +199,7 @@
             Literacy <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.mliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.mliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
                <option value="">Select</option>
               <option value="1">Literate</option>
               <option value="2">Illiterate</option>
@@ -198,14 +208,16 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mliteracy.required">Mother's literacy is required</p>
+
         </div>
 
-  <div v-if="user.mliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+  <div v-if="muser.mliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Level of Education <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.meducation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.meducation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="educ in education" v-bind:value="educ.code">{{educ.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -223,7 +235,7 @@
             Occupation Category<span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.moccupation_cat" @change="loadOccupation1" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.moccupation_cat" @change="loadOccupation1" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
@@ -231,6 +243,8 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.moccupation_cat.required">Mother's Occupation category is required</p>
+
         </div>
 
 
@@ -239,7 +253,7 @@
             Occupation <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.moccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="muser.moccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
@@ -247,6 +261,8 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.moccupation.required">Mother's Occupation is required</p>
+
         </div>
       </div>
 
@@ -257,39 +273,44 @@
             State of Residence <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-on:change="loadLga" v-model="user.state" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-on:change="loadLga" v-model="muser.state" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="state in states" v-bind:value="state.SN">{{state.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.state.required">Mother's state of residence is required</p>
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             LGA of Residence <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-on:change="loadWard" v-model="user.lga" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-lga" required>
+            <select v-on:change="loadWard" v-model="muser.lga" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-lga" required>
               <option v-for="lga in lgas" v-bind:value="lga.SN">{{lga.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.lga.required">Mother's LGA of residence is required</p>
+
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Ward of Residence <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-on:change="loadSettlements" v-model="user.ward" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ward" required>
+            <select v-on:change="loadSettlements" v-model="muser.ward" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ward" required>
               <option v-for="ward in wards" v-bind:value="ward.SN">{{ward.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.ward.required">Mother's Ward of residence is required</p>
+
         </div>
       </div>
 
@@ -300,7 +321,7 @@
             Settlement <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-on:change="loadPhc" v-model="user.settlement" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-settlement" required>
+            <select v-on:change="loadPhc" v-model="muser.settlement" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-settlement" required>
               <option v-for="settlement in settlements" v-bind:value="settlement.SN">{{settlement.Settlement}}</option>
               <option value="0">Other</option>
             </select>
@@ -308,12 +329,14 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.settlement.required">Mother's settlement is required</p>
+
         </div>
-        <div v-if="user.settlement == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div v-if="muser.settlement == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Specify Settlement <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.settlement_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+          <input v-model="muser.settlement_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.settlement_other">{{errors.settlement_other}}</p>
         </div>
         
@@ -327,7 +350,7 @@
             Catchment Health Facilty <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.phc" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state5" required>
+            <select v-model="muser.phc" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state5" required>
               <option v-for="phc in phcs" v-bind:value="phc.SN">{{phc.Name}}</option>
               <option value="0">Other</option>
             </select>
@@ -335,12 +358,14 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.phc.required">Mother's Catchment Health Facilty is required</p>
+
         </div>
-        <div v-if="user.phc == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div v-if="muser.phc == 0" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Specify Catchment Health Facilty <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.phc_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
+          <input v-model="muser.phc_other" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.phc_other">{{errors.phc_other}}</p>
         </div>
         
@@ -351,7 +376,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Village/ Town <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.village" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="text" placeholder="" required>
+          <input v-model="muser.village" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="text" placeholder="" required>
         </div>
         
       </div> -->
@@ -363,7 +388,7 @@
             Expected Date of Delivery (EDD) <span class="text-red-500">*</span>
           </label>
           <client-only>
-          <date-picker v-model="user.edd" :input-attr="{required: 'true'}" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
+          <date-picker v-model="muser.edd" :input-attr="{required: 'true'}" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-1.5 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required></date-picker>
           </client-only>
           <p class="text-red-500 text-xs italic" v-show="errors.edd">{{errors.edd}}</p>
@@ -375,7 +400,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Contact's Phone number One <span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatePhone1" v-model="user.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="tel" placeholder="" required>
+          <input v-on:blur="validatePhone1" v-model="muser.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="tel" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.phone1">{{errors.phone1}}</p>
         </div>
       </div>
@@ -384,7 +409,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Contact's Phone number Two <span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatePhone2" v-model="user.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="tel" placeholder="" required>
+          <input v-on:blur="validatePhone2" v-model="muser.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="tel" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.phone2">{{errors.phone2}}</p>
         </div>
       </div>
@@ -393,13 +418,12 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Contact's Phone number Three
           </label>
-          <input v-on:blur="validatePhone3" v-model="user.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="tel" placeholder="" >
+          <input v-on:blur="validatePhone3" v-model="muser.phone3" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password3" type="tel" placeholder="" >
           <p class="text-red-500 text-xs italic" v-show="errors.phone3">{{errors.phone3}}</p>
         </div>
       </div>
     </section>
     <section v-if="step == 2">
-      <h1>Step 2</h1>
 
     
 
@@ -408,14 +432,15 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             First Name  <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.ffname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
-          
+          <input v-model="fuser.ffname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.ffname.required">Father's first name is required</p>
+
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Middle Name  <span class="text-red-500"></span>
           </label>
-          <input v-model="user.fmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
+          <input v-model="fuser.fmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
           
         </div>
 
@@ -423,8 +448,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Surname  <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.fsname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
-          
+          <input v-model="fuser.fsname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fsname.required">Father's surname is required</p>
+
         </div>
         
       </div>
@@ -435,7 +461,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Phone Number <span class="text-red-500">*</span>
           </label>
-          <input v-on:blur="validatefPhone" v-model="user.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
+          <input v-on:blur="validatefPhone" v-model="fuser.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.fphone">{{errors.fphone}}</p>
         </div>
 
@@ -443,15 +469,15 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Family Code<span class="text-red-500">*</span>
           </label>
-          <input v-model="user.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" readonly placeholder="" required>
-            <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.mphone}}</p>
+          <input v-model="fuser.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
+            <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.fphone}}</p>
         </div>
 
         <div class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             National ID <span class="text-red-500"></span>
           </label>
-          <input v-on:blur="validateNin" v-model="user.fnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
+          <input v-on:blur="validateNin" v-model="fuser.fnin" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="tel" placeholder="">
             <p class="text-red-500 text-xs italic" v-show="errors.fnin">{{errors.fnin}}</p>
         </div>
         
@@ -468,8 +494,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Address <span class="text-red-500">*</span> <small>Place of residence</small>
           </label>
-          <textarea v-model="user.faddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder=""></textarea>
-          
+          <textarea v-model="fuser.faddress" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder=""></textarea>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.faddress.required">Father's address is required</p>
+
         </div>
         
       </div>
@@ -479,8 +506,9 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Date of Birth <span class="text-red-500">*</span>
           </label>
-          <input v-model="user.fdob" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="date" placeholder="" required>
-          <p class="text-red-500 text-xs italic" v-show="errors.fdob">{{errors.fdob}}</p>
+          <input v-model="fuser.fdob" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-mother" type="date" placeholder="" required>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fdob.required">Father's Date of birth is required</p>
+
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -488,7 +516,7 @@
             Marital Status <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.fstatus" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option value="1">Married</option>
               <option value="2">Single</option>
@@ -500,17 +528,19 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fstatus.required">Father's marital status is required</p>
+
         </div>
         
       </div>
 
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
-          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
             Nationality <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.fnationality" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="fgrid-state" required>
               <option value="">Select</option>
               <option value="1">Nigerian</option>
               <option value="2">Non Nigerian</option>
@@ -519,16 +549,18 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
-        </div>
-      </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fnationality.required">Father's Nationality is required</p>
 
-      <div v-if="user.fnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
+        </div>
+  </div>
+
+      <div v-if="fuser.fnationality == 1" class="flex flex-wrap -mx-3 mb-6" >
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             State of Origin <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fstate" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.fstate" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required>
               <option v-for="state in states" v-bind:value="state.SN">{{state.Name}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -542,7 +574,7 @@
             Ethnic Origin <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fethnicity" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.fethnicity" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"  required>
               <option v-for="tribe in tribes" v-bind:value="tribe.code">{{tribe.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -553,13 +585,14 @@
         
       </div>
 
+
       <div class="flex flex-wrap -mx-3 mb-6" >
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Literacy <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.fliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.fliteracy" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
                <option value="">Select</option>
               <option value="1">Literate</option>
               <option value="2">Illiterate</option>
@@ -568,14 +601,16 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fliteracy.required">Father's literacy is required</p>
+
         </div>
 
-        <div v-if="user.fliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div v-if="fuser.fliteracy == 1" class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
             Level of Education <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.feducation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.feducation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option v-for="educ in education" v-bind:value="educ.code">{{educ.title}}</option>
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -593,7 +628,7 @@
             Occupation Category<span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.foccupation_cat" @change="loadOccupation2" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.foccupation_cat" @change="loadOccupation2" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option v-for="ocu in occupation_categories" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
@@ -601,6 +636,8 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.foccupation_cat.required">Father's occupation category is required</p>
+
         </div>
 
 
@@ -609,7 +646,7 @@
             Occupation <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <select v-model="user.foccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
+            <select v-model="fuser.foccupation" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" required>
               <option value="">Select</option>
               <option v-for="ocu in occupations" v-bind:value="ocu.id">{{ocu.title}}</option>
             </select>
@@ -617,6 +654,8 @@
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
           </div>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.foccupation.required">Father's occupation is required</p>
+
         </div>
       </div>
 
@@ -706,7 +745,7 @@
       <button v-if="step != totalsteps" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit" @click.prevent="nextStep">
         Next
       </button>
-      <button v-if="step == totalsteps" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit">
+      <button v-if="step == totalsteps" :disabled="!btnDisabled" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit">
         Save
       </button>
     </div>
@@ -735,17 +774,69 @@
  import occupations from '~/static/occupation.json'
 //  import centres from '~/static/occupation.json'
  import swal from 'sweetalert2';
+
+ import { required, email, sameAs, minLength } from 'vuelidate/lib/validators';
+ import { helpers } from 'vuelidate/lib/validators'
+
+const mobile = helpers.regex(/(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/);
+
 window.Swal = swal;
 export default {  
-                  //name: Prereg,
-                  //props: ["user"],
                   data() {
                     return {
                       step : 1,
                       totalsteps: 2,
                       loading: true,
                       auth_user:'',
-                      user: {},
+                      last_id:'',
+                      muser: {
+                        hphone:'',
+                        mfname: '',
+                        mmname: '',
+                        msname: '',
+                        mphone: '',
+                        mnin: '',
+                        maddress: '',
+                        mstatus: '',
+                        mdob: '',
+                        mnationality: '',
+                        mstate: '',
+                        state: '',
+                        lga: '',
+                        ward: '',
+                        settlement: '',
+                        settlement_other: '',
+                        phc: '',
+                        phc_other: '',
+                        methnicity: '',
+                        mliteracy: '',
+                        meducation: '',
+                        moccupation_cat: '',
+                        moccupation: '',
+                        edd: '',
+                        phone1: '',
+                        phone2: '',
+                        phone3: '',
+                      },
+                      fuser: {
+                        ffname: '',
+                        fmname: '',
+                        fsname: '',
+                        fphone: '',
+                        fnin: '',
+                        faddress: '',
+                        fstatus: '',
+                        fdob: '',
+                        fnationality: '',
+                        fstate: '',
+                        fethnicity: '',
+                        fliteracy: '',
+                        feducation: '',
+                        foccupation_cat: '',
+                        foccupation: '',
+              
+                      },
+                      next: false,
                       states : [],
                       lgas : [],
                       wards : [],
@@ -780,32 +871,77 @@ export default {
                   // }
                     };
                   },
+                  validations: {
+                    muser: {
+                        mfname: {required},
+                        hphone: {required},
+                        msname: {required},
+                        mphone: {required},
+                        //mnin: {required},
+                        maddress: {required},
+                        mstatus: {required},
+                        mdob: {required},
+                        mnationality: {required},
+                        mstate: {required},
+                        state: {required},
+                        lga: {required},
+                        ward: {required},
+                        settlement: {required},
+                        //settlement_other: {required},
+                        phc: {required},
+                        //phc_other: {required},
+                        methnicity: {required},
+                        mliteracy: {required},
+                        meducation: {required},
+                        moccupation_cat: {required},
+                        moccupation: {required},
+                        edd: {required},
+                        //phone1: {required}
+                    },
+                    fuser: {
+                        ffname: {required},
+                        //mmname: {required},
+                        fsname: {required},
+                        fphone: {required},
+                        //mnin: {required},
+                        faddress: {required},
+                        fstatus: {required},
+                        fdob: {required},
+                        fnationality: {required},
+                        fstate: {required},
+                        fethnicity: {required},
+                        fliteracy: {required},
+                        feducation: {required},
+                        foccupation_cat: {required},
+                        foccupation: {required}
+                    }
+                },     
+                computed: {
+                  btnDisabled() {
+                    return !this.$v.$invalid;
+                  }
+                }, 
                   methods: {
                     nextStep(){
 
 //console.log(this.user);
                         if(this.step == 1){
-                          if(this.user.mfname == undefined || this.user.msname == undefined || this.user.mphone == undefined || this.user.maddress == undefined || 
-                            this.user.mdob == undefined || this.user.mstatus == undefined || this.user.mnationality == undefined || this.user.methnicity == undefined || 
-                            this.user.mliteracy == undefined || this.user.meducation == undefined || this.user.moccupation == undefined || this.user.phc == undefined || 
-                            this.user.edd == undefined || this.user.phone1 == undefined){
+                          this.next = true;
+                          if(this.$v.muser.$invalid){
 
                             Swal.fire(
                             'Error!',
-                            'Please complete all required fields',
+                            'Please review errors and complete all required fields',
                             'error'
                             )
-
-                            return false;
                           }else{
                               this.step++;
+                              this.next = false;
                           }
                           
                         }else if(this.step == 2){
 
-                            if(this.user.ffname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
-                            this.user.fdob == undefined || this.user.fstatus == undefined || this.user.fnationality == undefined || this.user.fethnicity == undefined || 
-                            this.user.fliteracy == undefined || this.user.feducation == undefined || this.user.foccupation == undefined){
+                            if(!this.$v.fuser.$invalid){
 
                             Swal.fire(
                             'Error!',
@@ -841,6 +977,10 @@ export default {
                     },
                   addUser() {
 
+                    this.muser.hphone = this.hphone;
+
+                    let user = {...this.muser, ...this.fuser};
+
                       if(!this.testDupes()){
                         Swal.fire(
                             'Failed!',
@@ -851,83 +991,65 @@ export default {
                             return false;
                       }
 
-                      if(this.user.ffname == undefined || this.user.fsname == undefined || this.user.fphone == undefined || this.user.faddress == undefined || 
-                            this.user.fdob == undefined || this.user.fstatus == undefined || this.user.fnationality == undefined || this.user.fethnicity == undefined || 
-                            this.user.fliteracy == undefined || this.user.feducation == undefined || this.user.foccupation == undefined){
 
-                            Swal.fire(
-                            'Error!',
-                            'Please complete all required fields',
-                            'error'
-                            )
+                      if(!this.$v.$invalid){
 
-                        }
-
-                      if(this.errors.phone == '' && this.errors.phone1 == '' && this.errors.phone2 == ''){
-
-                        if(this.user.fmname == undefined){
-                          this.user.fmname == '';
-                        }
-
-                        if(this.user.mmname == undefined){
-                          this.user.mmname == '';
-                        }
-            
-                        this.user.hphone = this.hphone;
-
-                        this.$emit('add-user-event', this.user);
+                        this.$emit('add-user-event', user);
                         
-                        this.previous = this.user;
+                        this.previous = user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
-                        this.user = {};
-                        this.user.state = this.previous.state;
-                        this.user.lga = this.previous.lga;
-                        this.user.ward = this.previous.ward;
-                        this.user.settlement = this.previous.settlement;
-                        this.user.phc = this.previous.phc;
+                        this.muser = {};
+                        this.fuser = {};
+                        this.muser.state = this.previous.state;
+                        this.muser.lga = this.previous.lga;
+                        this.muser.ward = this.previous.ward;
+                        this.muser.settlement = this.previous.settlement;
+                        this.muser.phc = this.previous.phc;
                         Swal.fire(
                             'Data Saved to Device!',
                             'Parent record has been saved to local storage, please click the submit button to upload',
                             'success'
                             )
+                            this.$nuxt.refresh();
                             this.step = 1;
+
                       }else{
                           Swal.fire(
                             'Failed!',
-                            'Please complete all required fields',
+                            'Please review errors and complete all required fields',
                             'error'
                             )
                       }
                         
                   },
                   loadLga(){
-                      if(this.user.state != ''){
-                           this.lgas = lgas.filter(lga => lga.StateID == this.user.state)
+                      if(this.muser.state != ''){
+                           this.lgas = lgas.filter(lga => lga.StateID == this.muser.state)
                       }
                   },
                   loadWard(){
-                      if(this.user.lga != ''){
-                           this.wards = wards.filter(ward => ward.LGAID == this.user.lga)
+                      if(this.muser.lga != ''){
+                           this.wards = wards.filter(ward => ward.LGAID == this.muser.lga)
                       }
                   },
                   loadSettlements(){
-                      if(this.user.ward != ''){
-                           this.settlements = settlements.filter(settlement => settlement.WardID == this.user.ward)
+                      if(this.muser.ward != ''){
+                           this.settlements = settlements.filter(settlement => settlement.WardID == this.muser.ward)
                       }
                   },
                   loadPhc(){
-                      if(this.user.settlement != ''){
-                           this.phcs = phcs.filter(phc => phc.WardID == this.user.ward)
+                      if(this.muser.settlement != ''){
+                           this.phcs = phcs.filter(phc => phc.WardID == this.muser.ward)
                       }
                   },
                   loadOccupation1(){
-                      if(this.user.moccupation_categories != ''){
-                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.user.moccupation_cat)
+                      if(this.muser.moccupation_categories != ''){
+                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.muser.moccupation_cat)
                       }
                   },
                   loadOccupation2(){
-                      if(this.user.foccupation_categories != ''){
-                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.user.foccupation_cat)
+                      if(this.fuser.foccupation_categories != ''){
+                           this.occupations = occupations.filter(ocu => ocu.occupation_group_id == this.fuser.foccupation_cat)
                       }
                   },
                   validateNin(){
@@ -970,7 +1092,7 @@ export default {
                           this.errors.phone1 = 'Please enter a valid phone number';
                       }
 
-                      var numbers = [this.user.mphone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      var numbers = [this.muser.mphone, this.muser.phone1, this.muser.phone2, this.muser.phone3];
                       numbers = numbers.filter(val => val != undefined);
                       var numFlds = numbers.length;
 
@@ -998,7 +1120,7 @@ export default {
                           this.errors.phone2 = 'Please enter a valid phone number';
                       }
 
-                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      var numbers = [this.muser.mphone, this.muser.phone1, this.muser.phone2, this.muser.phone3];
                       numbers = numbers.filter(val => val != undefined);
                       var numFlds = numbers.length;
 
@@ -1025,7 +1147,7 @@ export default {
                           this.errors.phone3 = 'Please enter a valid phone number';
                       }
 
-                      var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                      var numbers = [this.muser.mphone, this.muser.phone1, this.muser.phone2, this.muser.phone3];
                       numbers = numbers.filter(val => val != undefined);
                       var numFlds = numbers.length;
 
@@ -1058,7 +1180,7 @@ export default {
                       return date < today || date > new Date(today.getTime() + 252 * 24 * 3600 * 1000);
                     },
                   testDupes() {
-                    var numbers = [this.user.phone, this.user.phone1, this.user.phone2, this.user.phone3];
+                    var numbers = [this.muser.mphone, this.muser.phone1, this.muser.phone2, this.muser.phone3];
                     numbers = numbers.filter(val => val != undefined);
                     //console.log(numbers);
                     var numFlds = numbers.length;
@@ -1076,9 +1198,9 @@ export default {
                   sameAddress(){
                     console.log(this.checked)
                     if(this.checked != true){
-                      this.user.faddress = this.user.maddress;
+                      this.fuser.faddress = this.muser.maddress;
                     }else{
-                      this.user.faddress = '';
+                      this.fuser.faddress = '';
                     }
                   },
                   hasPhone(){
@@ -1086,14 +1208,28 @@ export default {
                     if(this.hphone == "1"){
                       
                       const date = new Date();
+                      
+                      let user = this.add_zero(this.auth_user.id, 6);
+                      let last_id = this.add_zero(this.last_id, 5);
+                      let fcode = parseInt("" + user + last_id);
+                      let code = fcode.toString(32);
 
-                      this.user.mphone = "" + Math.floor(date.getTime() / 1000) + this.auth_user.id;
-                      this.user.fphone = "" + Math.floor(date.getTime() / 1000) + this.auth_user.id;
+                      this.muser.mphone = code;
+                      this.fuser.fphone = code;
+
+                      localStorage.setItem('last_id', this.last_id);
 
                     }else{
-                      this.user.mphone = '';
-                      this.user.fphone = '';
+                      this.muser.mphone = '';
+                      this.fuser.fphone = '';
                     }
+                  },
+                  add_zero(number, length) {
+                      var num = '' + number;
+                      while (num.length < length) {
+                          num = '0' + num;
+                      }
+                      return num;
                   },
                   myFunction() {		
                     if(navigator.geolocation){
@@ -1116,28 +1252,40 @@ export default {
           this.education = education;
           this.occupation_categories = occupation_categories;
           this.occupations = occupations;
-          this.user.mdob = "2000-01-01";
-          this.user.fdob = "2000-01-01";
-          this.user.mstate = 15;
-          this.user.methnicity = "08";
-          this.user.fstate = 15;
-          this.user.fethnicity = "08";
+          this.muser.mdob = "2000-01-01";
+          this.fuser.fdob = "2000-01-01";
+          this.muser.mstate = 15;
+          this.muser.methnicity = "08";
+          this.fuser.fnationality = 1;
+          this.fuser.fstate = 15;
+          this.fuser.fethnicity = "08";
+
+          //this.step = 2;
 
           this.auth_user = this.$auth.user;
           
 
           if (localStorage.getItem("previous")){
               this.previous = JSON.parse(localStorage.getItem("previous"))
-              this.user.state = this.previous.state;
-              this.user.lga = this.previous.lga;
-              this.user.ward = this.previous.ward;
-              this.user.settlement = this.previous.settlement;
-              this.user.phc = this.previous.phc;
+              this.muser.state = this.previous.state;
+              this.muser.lga = this.previous.lga;
+              this.muser.ward = this.previous.ward;
+              this.muser.settlement = this.previous.settlement;
+              this.muser.phc = this.previous.phc;
             
               this.loadLga();
               this.loadWard();
               this.loadSettlements();
               this.loadPhc();
+            }
+            if(localStorage.getItem("last_id")){
+              this.last_id = localStorage.getItem("last_id");
+              if(this.auth_user.last_id > this.last_id){
+                  this.last_id = this.auth_user.last_id + 1;
+              }
+            }else{
+              this.last_id = this.auth_user.last_id + 1;
+              localStorage.setItem('last_id', this.last_id);
             }
             
       } 

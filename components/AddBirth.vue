@@ -3,6 +3,7 @@
     <div class="z-40 fixed top-0 left-0 w-full h-full outline-none overflow-x-hidden overflow-y-auto">
     <div class="relative flex items-top justify-center min-h-screen bg-gray-100 sm:items-center sm:pt-0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet'>
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
       <h1 class="flex justify-center pt-8 sm:pt-0 text-2xl leading-7 font-bold mt-4">
         Particulars of Child/Children
