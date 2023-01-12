@@ -790,7 +790,7 @@ export default {
                       auth_user:'',
                       last_id:'',
                       muser: {
-                        hphone:'',
+                        //hphone:'',
                         mfname: '',
                         mmname: '',
                         msname: '',
@@ -874,7 +874,7 @@ export default {
                   validations: {
                     muser: {
                         mfname: {required},
-                        hphone: {required},
+                        //hphone: {required},
                         msname: {required},
                         mphone: {required},
                         //mnin: {required},
@@ -978,23 +978,26 @@ export default {
                   addUser() {
 
                     this.muser.hphone = this.hphone;
+                    this.muser.chips_id = this.auth_user.id;
 
                     let user = {...this.muser, ...this.fuser};
 
-                      if(!this.testDupes()){
-                        Swal.fire(
-                            'Failed!',
-                            'Please do not repeat phone numbers, make sure every number is different',
-                            'error'
-                            );
+                      // if(!this.testDupes()){
+                      //   Swal.fire(
+                      //       'Failed!',
+                      //       'Please do not repeat phone numbers, make sure every number is different',
+                      //       'error'
+                      //       );
 
-                            return false;
-                      }
+                      //       return false;
+                      // }
 
 
                       if(!this.$v.$invalid){
 
                         this.$emit('add-user-event', user);
+
+                        this.last_id = this.last_id + 1;
                         
                         this.previous = user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -1223,6 +1226,7 @@ export default {
                       this.muser.mphone = '';
                       this.fuser.fphone = '';
                     }
+                    
                   },
                   add_zero(number, length) {
                       var num = '' + number;

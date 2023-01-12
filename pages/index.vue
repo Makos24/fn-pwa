@@ -103,7 +103,7 @@ export default {
                     if(data.msg == "Upload successful.") {
                         Swal.fire("Data Uploaded", "Upload successful.", "success");
                         this.users = [];
-                        console.log(data.data)
+                        //console.log(data.data)
                         if(data.data.length > 0){
                             
                             this.edds = this.edds.concat(data.data);
