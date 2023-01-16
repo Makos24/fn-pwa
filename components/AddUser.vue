@@ -790,7 +790,7 @@ export default {
                       auth_user:'',
                       last_id:'',
                       muser: {
-                        //hphone:'',
+                        hphone:'',
                         mfname: '',
                         mmname: '',
                         msname: '',
@@ -813,6 +813,7 @@ export default {
                         meducation: '',
                         moccupation_cat: '',
                         moccupation: '',
+                        chips_id : '',
                         edd: '',
                         phone1: '',
                         phone2: '',
@@ -911,7 +912,7 @@ export default {
                         fstate: {required},
                         fethnicity: {required},
                         fliteracy: {required},
-                        feducation: {required},
+                        //feducation: {required},
                         foccupation_cat: {required},
                         foccupation: {required}
                     }
@@ -927,6 +928,15 @@ export default {
 //console.log(this.user);
                         if(this.step == 1){
                           this.next = true;
+
+                          if(this.errors.mphone != ''){
+                            Swal.fire(
+                            'Error!',
+                            'Please provide a valid phone number for mother',
+                            'error'
+                            )
+                          }
+
                           if(this.$v.muser.$invalid){
 
                             Swal.fire(
@@ -935,11 +945,20 @@ export default {
                             'error'
                             )
                           }else{
+
                               this.step++;
                               this.next = false;
                           }
                           
                         }else if(this.step == 2){
+
+                          if(this.errors.fphone != ''){
+                            Swal.fire(
+                            'Error!',
+                            'Please provide a valid phone number for father',
+                            'error'
+                            )
+                          }
 
                             if(!this.$v.fuser.$invalid){
 
@@ -978,7 +997,7 @@ export default {
                   addUser() {
 
                     this.muser.hphone = this.hphone;
-                    this.muser.chips_id = this.auth_user.id;
+                    this.muser.chips_id = this.$auth.user.id;
 
                     let user = {...this.muser, ...this.fuser};
 
