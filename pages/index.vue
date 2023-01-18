@@ -45,7 +45,7 @@
 </div>
 
   <div class="flex-col justify-between w-full">
-  <AddUser v-on:add-user-event="addUserRecord" />
+  <AddUser v-on:add-user-event="addUserRecord" :key="add_reload" />
   </div>
   
 </div>
@@ -69,6 +69,7 @@ export default {
             loading: true,
             loadings: false,
             visible: false,
+            add_reload: 0,
             users: [],
             edds: [],
             isSuccess: false
@@ -101,6 +102,9 @@ export default {
                     return response.json();
                 }).then(data => {
                     if(data.msg == "Upload successful.") {
+
+                        this.add_reload++;
+
                         Swal.fire("Data Uploaded", "Upload successful.", "success");
                         this.users = [];
                         //console.log(data.data)

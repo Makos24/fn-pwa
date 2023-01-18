@@ -893,7 +893,7 @@ export default {
                         //phc_other: {required},
                         methnicity: {required},
                         mliteracy: {required},
-                        meducation: {required},
+                        //meducation: {required},
                         moccupation_cat: {required},
                         moccupation: {required},
                         edd: {required},
@@ -1016,7 +1016,8 @@ export default {
 
                         this.$emit('add-user-event', user);
 
-                        this.last_id = this.last_id + 1;
+                        // this.last_id = this.last_id + 1;
+                        this.last_id = localStorage.getItem("last_id");
                         
                         this.previous = user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -1032,6 +1033,7 @@ export default {
                             'Parent record has been saved to local storage, please click the submit button to upload',
                             'success'
                             )
+                            this.$forceUpdate();
                             this.$nuxt.refresh();
                             this.step = 1;
 
@@ -1239,7 +1241,10 @@ export default {
                       this.muser.mphone = code;
                       this.fuser.fphone = code;
 
-                      localStorage.setItem('last_id', this.last_id);
+                      this.errors.mphone = '';
+                      this.errors.fphone = '';
+
+                      localStorage.setItem('last_id', parseInt(this.last_id) + 1);
 
                     }else{
                       this.muser.mphone = '';
@@ -1308,8 +1313,8 @@ export default {
               }
             }else{
               this.last_id = this.auth_user.last_id + 1;
-              localStorage.setItem('last_id', this.last_id);
-            }
+              localStorage.setItem('last_id', parseInt(this.last_id));
+            } 
             
       } 
                   
