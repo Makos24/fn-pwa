@@ -32,7 +32,7 @@
                 <p  class="inline-block mt-1 text-gray-700">{{parent.father}}</p>
                 <p  class="inline-block mt-1 text-gray-400 text-sm">({{parent.mother}})</p>
               </div>
-              <button  v-if="parent.status" class="absolute right-0 flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              <button  v-if="parent.status == '1'" class="absolute right-0 flex items-center bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Birth Reported
               </button>
               <button v-else @click="onToggle(parent)"  class="absolute right-0 flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

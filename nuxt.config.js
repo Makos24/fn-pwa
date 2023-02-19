@@ -9,7 +9,7 @@ export default {
     middleware: ['remember']
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'https://avigohealth.com/avigo-laravel'
+    baseUrl: process.env.BASE_URL || 'https://avigohealth.com/albarka-admin'
     //baseUrl: process.env.BASE_URL || 'http://localhost:8000'
   },
 
@@ -71,7 +71,7 @@ export default {
         laravelSanctum: {
           provider: 'laravel/sanctum',
           //url: 'http://localhost:8000',
-          url: 'https://avigohealth.com/avigo-laravel',
+          url: 'https://avigohealth.com/albarka-admin',
           endpoints: {
             login : {
               url: '/api/login'
@@ -133,14 +133,14 @@ export default {
   //   }
   // },
   axios: {
-    baseUrl : 'https://avigohealth.com/avigo-laravel',
+    baseUrl : 'https://avigohealth.com/albarka-admin',
     //baseUrl : 'http://localhost:8000',
     proxy: true,
     credentials: true
   },
   proxy: {
     '/laravel': {
-      target: 'https://avigohealth.com/avigo-laravel',
+      target: 'https://avigohealth.com/albarka-admin',
       //target: 'http://localhost:8000',
       pathRewrite: { '^/laravel': '/' },
     }

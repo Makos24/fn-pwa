@@ -45,7 +45,7 @@
 </div>
 
   <div class="flex-col justify-between w-full">
-  <AddUser v-on:add-user-event="addUserRecord" :key="add_reload" />
+  <AddUser v-on:add-user-event="addUserRecord" />
   </div>
   
 </div>

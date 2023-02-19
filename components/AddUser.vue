@@ -18,7 +18,7 @@
  <a class="font-bold" :href="link">See Location on Map</a>
 	<p>{{error}}</p>
 </div> -->
-<form class="w-full" v-on:submit.prevent="addUser()" method="POST">
+<form class="w-full" method="POST">
 
     <section v-if="step == 1">
 
@@ -85,7 +85,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Family Code<span class="text-red-500">*</span>
           </label>
-          <input v-model="muser.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
+          <input v-model="muser.mphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 lowercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
             <p class="text-red-500 text-xs italic">Please copy code and keep safe</p>
         </div>
         <div class="w-full md:w-1/2 px-3">
@@ -391,6 +391,7 @@
           <date-picker v-model="muser.edd" :input-attr="{required: 'true'}" :disabled-date="disabledBeforeTodayAndAfter9Months" input-class="py-2.5 block w-full bg-gray-200 focus:bg-white leading-tight" value-type="YYYY-MM-DD" format="DD/MM/YYYY"
           class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-1.5 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" required></date-picker>
           </client-only>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.edd.required">EDD is required</p>
           <p class="text-red-500 text-xs italic" v-show="errors.edd">{{errors.edd}}</p>
         </div>
       </div>
@@ -398,7 +399,7 @@
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Contact's Phone number One <span class="text-red-500">*</span>
+            Contact's Phone number One <span class="text-red-500"></span>
           </label>
           <input v-on:blur="validatePhone1" v-model="muser.phone1" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password1" type="tel" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.phone1">{{errors.phone1}}</p>
@@ -407,7 +408,7 @@
       <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Contact's Phone number Two <span class="text-red-500">*</span>
+            Contact's Phone number Two <span class="text-red-500"></span>
           </label>
           <input v-on:blur="validatePhone2" v-model="muser.phone2" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password2" type="tel" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="errors.phone2">{{errors.phone2}}</p>
@@ -469,7 +470,7 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Family Code<span class="text-red-500">*</span>
           </label>
-          <input v-model="fuser.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 uppercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
+          <input v-model="fuser.fphone" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 lowercase" style="font-family: 'Inconsolata';" id="grid-last-name" type="tel" readonly placeholder="" required>
             <p class="text-red-500 text-xs italic" v-show="errors.phone">{{errors.fphone}}</p>
         </div>
 
@@ -739,13 +740,13 @@
 
 <div class="flex items-center justify-between mt-8">
       
-      <button v-if="step != 1" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit" @click.prevent="prevStep">
+      <button v-if="step != 1" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="button" @click="prevStep">
         Previous
       </button>
-      <button v-if="step != totalsteps" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit" @click.prevent="nextStep">
+      <button v-if="step != totalsteps" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="button" @click="nextStep">
         Next
       </button>
-      <button v-if="step == totalsteps" :disabled="!btnDisabled" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit">
+      <button v-if="step == totalsteps" @click="addUser()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="button">
         Save
       </button>
     </div>
@@ -996,28 +997,32 @@ export default {
                     },
                   addUser() {
 
+                    this.next = true;
+                    if(this.$v.fuser.$invalid){
+
+                    Swal.fire(
+                    'Error!',
+                    'Please complete all required fields',
+                    'error'
+                    )
+                    }
+
                     this.muser.hphone = this.hphone;
-                    this.muser.chips_id = this.$auth.user.id;
+                    this.muser.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
+                    localStorage.setItem('last_id', parseInt(this.last_id) + 1);
+                    this.last_id = this.last_id + 1;
+                    //this.muser.chips_id = 10;
 
                     let user = {...this.muser, ...this.fuser};
 
-                      // if(!this.testDupes()){
-                      //   Swal.fire(
-                      //       'Failed!',
-                      //       'Please do not repeat phone numbers, make sure every number is different',
-                      //       'error'
-                      //       );
-
-                      //       return false;
-                      // }
-
+                  
 
                       if(!this.$v.$invalid){
 
                         this.$emit('add-user-event', user);
 
                         // this.last_id = this.last_id + 1;
-                        this.last_id = localStorage.getItem("last_id");
+                        //this.last_id = localStorage.getItem("last_id");
                         
                         this.previous = user;
                         localStorage.setItem('previous',JSON.stringify(this.previous))
@@ -1028,14 +1033,20 @@ export default {
                         this.muser.ward = this.previous.ward;
                         this.muser.settlement = this.previous.settlement;
                         this.muser.phc = this.previous.phc;
+                        this.hphone = 1;
                         Swal.fire(
                             'Data Saved to Device!',
                             'Parent record has been saved to local storage, please click the submit button to upload',
                             'success'
                             )
+
+                            
+
                             this.$forceUpdate();
                             this.$nuxt.refresh();
                             this.step = 1;
+
+                            this.$router.push('/');
 
                       }else{
                           Swal.fire(
@@ -1232,6 +1243,8 @@ export default {
                     if(this.hphone == "1"){
                       
                       const date = new Date();
+
+                     
                       
                       let user = this.add_zero(this.auth_user.id, 6);
                       let last_id = this.add_zero(this.last_id, 5);
@@ -1244,7 +1257,7 @@ export default {
                       this.errors.mphone = '';
                       this.errors.fphone = '';
 
-                      localStorage.setItem('last_id', parseInt(this.last_id) + 1);
+                      //localStorage.setItem('last_id', parseInt(this.last_id) + 1);
 
                     }else{
                       this.muser.mphone = '';
@@ -1288,10 +1301,12 @@ export default {
           this.fuser.fstate = 15;
           this.fuser.fethnicity = "08";
 
+
           //this.step = 2;
 
-          this.auth_user = this.$auth.user;
+          this.auth_user = JSON.parse(localStorage.getItem("auth.user"));
           
+
 
           if (localStorage.getItem("previous")){
               this.previous = JSON.parse(localStorage.getItem("previous"))
@@ -1306,15 +1321,19 @@ export default {
               this.loadSettlements();
               this.loadPhc();
             }
-            if(localStorage.getItem("last_id")){
-              this.last_id = localStorage.getItem("last_id");
-              if(this.auth_user.last_id > this.last_id){
-                  this.last_id = this.auth_user.last_id + 1;
-              }
-            }else{
-              this.last_id = this.auth_user.last_id + 1;
-              localStorage.setItem('last_id', parseInt(this.last_id));
-            } 
+
+
+            if(!isNaN(localStorage.getItem("last_id"))){
+                this.last_id = JSON.parse(localStorage.getItem("last_id"));
+                if(this.auth_user.last_id > this.last_id){
+                    this.last_id = parseInt(this.auth_user.last_id + 1);
+                }
+              }else{
+                this.last_id = parseInt(this.auth_user.last_id + 1);
+                localStorage.setItem('last_id', parseInt(this.last_id));
+              } 
+                      
+            
             
       } 
                   

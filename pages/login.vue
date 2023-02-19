@@ -48,6 +48,7 @@ export default {
     return {
       username: '',
       password: '',
+      edds: [],
       remember: false,
       error: null
     }
@@ -68,6 +69,27 @@ export default {
 
          // console.log(res);
 
+         if(res.data.edd.length > 0){
+                            
+            this.edds = this.edds.concat(res.data.edd);
+
+            let foo = new Map();
+            for(const tag of this.edds) {
+            foo.set(tag.edd_id, tag);
+            }
+            let final = [...foo.values()]
+            this.edds = final;
+
+
+            // this.edds.forEach(item => {
+            //   if(!map.has(item.edd_id)){
+            //     map.set(item.edd_id, item);
+            //   }
+            // });
+            // Array.from(map.values());
+                                                        
+          }
+
           let user = res.data.user // getting user (yours can be different)
           this.$auth.$storage.setUniversal('user', user, true) // setting user in Vuex, cookies and localstorage
 
@@ -79,7 +101,7 @@ export default {
           
   }).catch(e => {
         //this.errorMessage = error.message;
-         Swal.fire("Login Failed!", "Username or Password Incorrect", "error");
+        //  Swal.fire("Login Failed!", "Username or Password Incorrect", "error");
          console.log(e);
         //this.error = e.response.data.message
       }
@@ -117,7 +139,15 @@ export default {
 
      
     
-  }
+  },
+  watch: {
+        edds: {
+            handler() {
+                localStorage.setItem("edds", JSON.stringify(this.edds));
+            },
+            deep: true
+        }
+    },
     
 
 }

@@ -65,6 +65,9 @@
           <nuxt-link to="/parents" class="text-sm font-bold text-gray-800 hover:text-blue-400">
            Registrations
           </nuxt-link>
+          <nuxt-link to="/phonenumbers" class="text-sm font-bold text-gray-800 hover:text-blue-400">
+           Registration Update
+          </nuxt-link>
           <nuxt-link to="/profile" class="text-sm font-bold text-gray-800 hover:text-blue-400">
             Profile
           </nuxt-link>
