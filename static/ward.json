@@ -1,7 +1,6 @@
 
 [
 {"SN":"21","WardID":"Ward21","LGAID":"119","StateID":"15","Name":"Akko"},
-{"SN":"22","WardID":"Ward22","LGAID":"119","StateID":"15","Name":"Dadiya"},
 {"SN":"23","WardID":"Ward23","LGAID":"119","StateID":"15","Name":"Garko"},
 {"SN":"24","WardID":"Ward24","LGAID":"119","StateID":"15","Name":"Kalshingi"},
 {"SN":"25","WardID":"Ward25","LGAID":"119","StateID":"15","Name":"Kashere"},
@@ -9,6 +8,7 @@
 {"SN":"27","WardID":"Ward27","LGAID":"119","StateID":"15","Name":"Kumo East"},
 {"SN":"28","WardID":"Ward28","LGAID":"119","StateID":"15","Name":"Kumo North"},
 {"SN":"29","WardID":"Ward29","LGAID":"119","StateID":"15","Name":"Kumo West"},
+{"SN":"141","WardID":"Ward141","LGAID":"119","StateID":"15","Name":"Kumo Central"},
 {"SN":"30","WardID":"Ward30","LGAID":"119","StateID":"15","Name":"Pindiga"},
 {"SN":"31","WardID":"Ward31","LGAID":"119","StateID":"15","Name":"Tukulma"},
 {"SN":"32","WardID":"Ward32","LGAID":"119","StateID":"15","Name":"Tumu"},

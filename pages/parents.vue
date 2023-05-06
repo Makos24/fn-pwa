@@ -1,6 +1,6 @@
 <template>
 
-<div classmax-w-4xl mx-auto sm=":px-6 lg:px-8"> 
+<div class="max-w-4xl mx-auto sm:px-6 lg:px-8"> 
     <div  v-show="births.length">
   
   <p class=" mb-4 font-bold text-1xl">You currently have {{births.length}} Records stored locally, please click on submit to upload</p>

@@ -49,6 +49,7 @@ export default {
       username: '',
       password: '',
       edds: [],
+      children: [],
       remember: false,
       error: null
     }
@@ -89,6 +90,20 @@ export default {
             // Array.from(map.values());
                                                         
           }
+
+          if(res.data.children.length > 0){
+                            
+              this.children = this.children.concat(res.data.children);
+  
+              let foo = new Map();
+              for(const tag of this.children) {
+              foo.set(tag.child_id, tag);
+              }
+              let final = [...foo.values()]
+              this.children = final;
+          
+                                                                        
+        }
 
           let user = res.data.user // getting user (yours can be different)
           this.$auth.$storage.setUniversal('user', user, true) // setting user in Vuex, cookies and localstorage
@@ -144,6 +159,12 @@ export default {
         edds: {
             handler() {
                 localStorage.setItem("edds", JSON.stringify(this.edds));
+            },
+            deep: true
+        },
+        children: {
+            handler() {
+                localStorage.setItem("children", JSON.stringify(this.children));
             },
             deep: true
         }

@@ -91,9 +91,25 @@
       <div class="w-full px-3 mb-6 md:mb-0">
         <div class="flex flex-wrap -mx-3 mb-6">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Name of Child
+            Child First Name
           </label>
-          <input v-model="birth.name" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="birth.fname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+        </div>
+        </div>
+        <div class="w-full px-3 mb-6 md:mb-0">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Child Middle Name
+          </label>
+          <input v-model="birth.mname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
+        </div>
+        </div>
+        <div class="w-full px-3 mb-6 md:mb-0">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Child Last Name
+          </label>
+          <input v-model="birth.lname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
         </div>
         </div>
 <div class="flex flex-wrap -mx-3 mb-6">
@@ -157,7 +173,7 @@
       </span>
 
 
-  <span v-if="birth.type == 2 && birth.no > 1" >
+  <span v-if="birth.type == 2 && birth.no != undefined" >
     <div class="flex flex-wrap -mx-3 mb-6">
 
 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -205,12 +221,29 @@
       <div class="w-full px-3 mb-6 md:mb-0">
         <div class="flex flex-wrap -mx-3 mb-6">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-            Name of Child {{n}}
+            Child First Name {{n}}
           </label>
-          <input v-model="name[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="fname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
         </div>
         </div>
 
+        <div class="w-full px-3 mb-6 md:mb-0">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Child Middle Name {{n}}
+          </label>
+          <input v-model="mname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
+        </div>
+        </div>
+
+        <div class="w-full px-3 mb-6 md:mb-0">
+        <div class="flex flex-wrap -mx-3 mb-6">
+          <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+            Child Last Name {{n}}
+          </label>
+          <input v-model="lname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+        </div>
+        </div>
 <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -276,7 +309,9 @@ export default {
                     return {
                       loading: true,
                       birth: {},
-                      name : [],
+                      fname : [],
+                      mname : [],
+                      lname : [],
                       gender : [],
                       previous: {},
                       errors: {},
@@ -295,7 +330,7 @@ export default {
 
                     if(this.birth.type != undefined && this.birth.type == 1){
 
-                      if(this.birth.name == undefined || this.birth.gender == undefined || this.birth.place == undefined
+                      if(this.birth.fname == undefined || this.birth.lname == undefined || this.birth.gender == undefined || this.birth.place == undefined
                       || this.birth.type == undefined || this.birth.order == undefined || this.birth.dob == undefined){
                           this.fail();
                       }else{
@@ -324,7 +359,9 @@ export default {
                           birth.place_other = this.birth.place_other;
                           birth.dob = this.birth.dob;
                           birth.edd = this.birth.edd;
-                          birth.name = this.name[i];
+                          birth.fname = this.fname[i];
+                          birth.mname = this.mname[i];
+                          birth.lname = this.lname[i];
                           birth.gender = this.gender[i];
                           //let o = i;
                           birth.order = this.birth.order;
@@ -339,7 +376,9 @@ export default {
 
                         this.birth = {};
                         this.gender = [];
-                        this.name = [];
+                        this.fname = [];
+                        this.mname = [];
+                        this.lname = [];
 
                             this.pass();
 
@@ -348,7 +387,6 @@ export default {
                       }
 
                     }
-                      
                       
                         
                   },

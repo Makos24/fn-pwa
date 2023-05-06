@@ -68,8 +68,8 @@
           <nuxt-link to="/phonenumbers" class="text-sm font-bold text-gray-800 hover:text-blue-400">
            Registration Update
           </nuxt-link>
-          <nuxt-link to="/profile" class="text-sm font-bold text-gray-800 hover:text-blue-400">
-            Profile
+          <nuxt-link to="/births" class="text-sm font-bold text-gray-800 hover:text-blue-400">
+            Reported Births
           </nuxt-link>
           <a href="#" @click="logout" class="text-sm font-bold text-gray-800 hover:text-blue-400">
             Logout
