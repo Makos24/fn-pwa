@@ -63,7 +63,7 @@
     // import Navbar from '../components/Navbar.vue';
     window.Swal = swal;
     export default {
-        middleware: "auth",
+         middleware: "auth",
         //name: Prereg,
         //props: ["user"],
         data() {
@@ -119,7 +119,9 @@
         },
             addBirthRecord(newBirth) {
             //console.log(newBirth)
-            this.births = [...this.births, newBirth];
+            if(!this.parents.findIndex(obj=> obj.edd_id === newBirth.edd)){
+                this.births = [...this.births, newBirth];
+            }   
 
             let objIndex = this.parents.findIndex(obj=> obj.edd_id === newBirth.edd);
             

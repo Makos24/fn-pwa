@@ -17,7 +17,7 @@
  <a class="font-bold" :href="link">See Location on Map</a>
 	<p>{{error}}</p>
 </div> -->
-<form v-on:submit="addBirth" class="w-full" method="POST">
+<form class="w-full" method="POST">
     
 
       <div class="flex flex-wrap -mx-3 mb-6">
@@ -34,14 +34,15 @@
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
-          </div>         
+            </div> 
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.type.required">Type is required.</span>
+        
         </div>
         <div v-if="birth.type == 2" class="w-full md:w-1/2 px-3">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
             Number of Children
           </label>
           <input v-model="birth.no" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" required>
-            <p class="text-red-500 text-xs italic" v-show="errors.no">{{errors.no}}</p>
         </div>
         
       </div>
@@ -53,7 +54,8 @@
             Village/Town of Birth <small>(where the birth occured)</small>
           </label>
           <input v-model="birth.location" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="" required>
-            <p class="text-red-500 text-xs italic" v-show="errors.no">{{errors.no}}</p>
+          <span class="text-red-500 text-xs italic" v-if="!$v.birth.location.required">Village/Town is required.</span>
+
         </div>
 
         <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -69,7 +71,10 @@
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
-          </div>         
+            
+          </div>  
+          <span class="text-red-500 text-xs italic" v-if="!$v.birth.location_type.required">Location type is required.</span>
+       
         </div>
         
       </div>
@@ -81,7 +86,8 @@
             Birth Order <small>(Position of child/children)</small>
           </label>
           <input v-model="birth.order" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="number" placeholder="" required>
-            <p class="text-red-500 text-xs italic" v-show="errors.no">{{errors.no}}</p>
+          <span class="text-red-500 text-xs italic" v-if="!$v.birth.order.required">Birth Order is required.</span>
+
         </div>
         
         
@@ -94,6 +100,10 @@
             Child First Name
           </label>
           <input v-model="birth.fname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <div v-if="$v.birth.fname.$dirty && $v.birth.fname.$error">
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.fname.required">First name is required.</span>
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.fname.alpha">First name must contain alphabetic characters only.</span>
+          </div>
         </div>
         </div>
         <div class="w-full px-3 mb-6 md:mb-0">
@@ -102,6 +112,9 @@
             Child Middle Name
           </label>
           <input v-model="birth.mname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
+          <div v-if="$v.birth.mname.$dirty && $v.birth.mname.$error">
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.mname.alpha">Middle name must contain alphabetic characters only.</span>
+          </div>
         </div>
         </div>
         <div class="w-full px-3 mb-6 md:mb-0">
@@ -110,6 +123,10 @@
             Child Last Name
           </label>
           <input v-model="birth.lname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <div v-if="$v.birth.lname.$dirty && $v.birth.lname.$error">
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.lname.required">Last name is required.</span>
+            <span class="text-red-500 text-xs italic" v-if="!$v.birth.lname.alpha">Last name must contain alphabetic characters only.</span>
+          </div>
         </div>
         </div>
 <div class="flex flex-wrap -mx-3 mb-6">
@@ -127,7 +144,10 @@
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
-          </div>         
+            
+          </div>    
+          <span class="text-red-500 text-xs italic" v-if="!$v.birth.gender.required">Gender is required.</span>
+     
         </div>
 
 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -136,6 +156,7 @@
           </label>
           <input v-model="birth.dob" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="date" placeholder="" required>
         </div>
+        <span class="text-red-500 text-xs italic" v-if="!$v.birth.dob.required">Date of Birth is required.</span>
 
       </div>
 
@@ -159,7 +180,10 @@
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
               <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
             </div>
-          </div>         
+            
+          </div>  
+          <span class="text-red-500 text-xs italic" v-if="!$v.birth.place.required">Place is required.</span>
+       
         </div>
         <div class="w-full md:w-1/2 px-3" v-if="birth.place != undefined && birth.place == 5">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
@@ -223,7 +247,8 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Child First Name {{n}}
           </label>
-          <input v-model="fname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="fname[n]" @blur="validateName('fname')" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p v-if="errors.fname[n]" class="text-red-500 text-xs italic">{{ errors.fname[n] }}</p>
         </div>
         </div>
 
@@ -233,6 +258,7 @@
             Child Middle Name {{n}}
           </label>
           <input v-model="mname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
+          
         </div>
         </div>
 
@@ -241,7 +267,8 @@
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
             Child Last Name {{n}}
           </label>
-          <input v-model="lname[n]" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <input v-model="lname[n]" @blur="validateName('lname')" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
+          <p v-if="errors.lname[n]" class="text-red-500 text-xs italic">{{ errors.lname[n] }}</p>
         </div>
         </div>
 <div class="flex flex-wrap -mx-3 mb-6">
@@ -277,7 +304,7 @@
         Cancel
       </button>
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="submit">
+      <button v-on:click="addBirth" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded focus:outline-none focus:shadow-outline" type="button">
         Save
       </button>
     </div>
@@ -299,7 +326,8 @@
 
 <script>
 
- import swal from 'sweetalert2';
+import swal from 'sweetalert2';
+import { required, alpha } from 'vuelidate/lib/validators';
 window.Swal = swal;
 export default {  
                   //name: Prereg,
@@ -308,52 +336,94 @@ export default {
                   data() {
                     return {
                       loading: true,
-                      birth: {},
+                      birth: {
+                        type:'',
+                        no:'',
+                        location:'',
+                        location_type:'',
+                        order:'',
+                        fname:'',
+                        mname:'',
+                        lname:'',
+                        gender:'',
+                        dob:'',
+                        place:'',
+                        place_other:''
+                      },
                       fname : [],
                       mname : [],
                       lname : [],
                       gender : [],
                       previous: {},
-                      errors: {},
+                      errorss: {},
                       isSuccess: false,
-                      lat:'',
-	                    lon:'',
-                      error:'',
+                      errors: {
+                          fname: [],
+                          mname: [],
+                          lname: []
+                        },
                       link:''
                     };
                   },
+                  validations: {
+                  birth: {
+                      type:{required},
+                      //no:{required},
+                      location:{required},
+                      location_type:{required},
+                      order:{required},
+                      fname:{required, alpha},
+                      mname:{alpha},
+                      lname:{required, alpha},
+                      gender:{required},
+                      dob:{required},
+                      place:{required},
+                      //place_other:{}
+                    },
+                  
+                },
                   methods: {
                     
                   addBirth() {
 
                     this.birth.edd = this.edd;
+                    //this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
 
+                    this.$v.$touch(); // Trigger validation for all fields
+      
                     if(this.birth.type != undefined && this.birth.type == 1){
 
-                      if(this.birth.fname == undefined || this.birth.lname == undefined || this.birth.gender == undefined || this.birth.place == undefined
-                      || this.birth.type == undefined || this.birth.order == undefined || this.birth.dob == undefined){
-                          this.fail();
-                      }else{
-
-                        this.$emit('add-birth-event', this.birth);
-                         this.birth = {};
+                      console.log(this.$v);
+                      if (!this.$v.birth.$invalid) {
+                      
+                          this.$emit('add-birth-event', this.birth);
+                          this.birth = {};
                           this.pass();
-
                           this.close();
-                         
+                      }else{
+                        this.fail();
                       }
 
                     }else{
 
-                      if(this.birth.place == undefined || this.birth.type == undefined || this.birth.dob == undefined){
-                        this.fail();
-                      }else{
 
+                      const errorMessages = Object.values(this.errors)
+                      .flatMap(errorArray => errorArray)
+                      .filter(errorMessage => errorMessage !== '');
 
+                      console.log(errorMessages); 
+
+                    if (errorMessages.length > 0) {
+                          // Handle validation errors, display error messages, etc.
+                          this.fail();
+                          
+                        }else{
 
                         for(let i = 1; i <= (this.birth.no*1); i++){
 
                           let birth = {};
+                          this.birth.edd = this.edd;
+                          //this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
                           birth.type = this.birth.type;
                           birth.place = this.birth.place;
                           birth.place_other = this.birth.place_other;
@@ -370,8 +440,7 @@ export default {
                           birth.location_type = this.birth.location_type;
 
                         this.$emit('add-birth-event', birth);
-                         
-
+                       
                         }
 
                         this.birth = {};
@@ -383,11 +452,9 @@ export default {
                             this.pass();
 
                             this.close();
-                         
                       }
-
-                    }
-                      
+                         
+                      }  
                         
                   },
                   close() {
@@ -396,30 +463,37 @@ export default {
                  fail(){
                   Swal.fire(
                             'Failed!',
-                            'Please complete all required fields',
+                            'Please complete all required fields and review all errors',
                             'error'
-                            )
+                            );
+                            return;
                  },
                  pass(){
                   Swal.fire(
                             'Data Saved to Device!',
-                            'Parent record has been saved to local storage, please click the submit button to upload',
+                            'Child record has been saved to local storage, please click the submit button to upload',
                             'success'
                             )
                  },
-                  myFunction() {		
-                    if(navigator.geolocation){
-                    navigator.geolocation.getCurrentPosition(this.showPosition);
-                    }else{
-                    this.error = "Geolocation is not supported."; 
-                      
+
+                 validateName(arrayName) {
+                      const namesArray = this[arrayName];
+                      const errorsArray = this.errors[arrayName];
+
+                      // Regular expression pattern to match alphabetic characters
+                      const nameRegex = /^[A-Za-z]+$/;
+
+                      for (let i = 0; i < namesArray.length; i++) {
+                        const name = namesArray[i];
+                        if (name === '') {
+                          errorsArray[i] = `Name ${arrayName} is required.`;
+                        } else if (!nameRegex.test(name)) {
+                          errorsArray[i] = `Invalid name ${arrayName}. Only alphabetic characters are allowed.`;
+                        } else {
+                          errorsArray[i] = '';
+                        }
+                      }
                     }
-    },
-	showPosition(position) {	
-		this.lat = position.coords.latitude;
-		this.lon = position.coords.longitude;
-    this.link = "https://www.google.com/maps/search/?api=1&query="+this.lat+","+this.lon
-	}
                     
                   },
                    

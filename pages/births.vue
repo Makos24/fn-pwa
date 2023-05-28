@@ -131,7 +131,9 @@
                 Swal.fire({
                 title: 'Has Birth Certificate been Issued to this child?',
                 icon: 'info',
-                confirmButtonText: 'Yes'
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                cancelButtonText: "No"
             }).then((result) => {
                 if (result['isConfirmed']){
                     
@@ -142,6 +144,8 @@
                 
                 //update the item
                 this.children[objIndex].status = 1;
+
+                Swal.fire("Saved", "Successful.", "success");
 
                 }
             })

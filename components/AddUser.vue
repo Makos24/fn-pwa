@@ -50,13 +50,16 @@
           </label>
           <input v-model="muser.mfname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mfname.required">Mother's first name is required</p>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mfname.alpha">Invalid first name. Only alphabetic characters are allowed.</p>
+
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
             Middle Name  <span class="text-red-500"></span>
           </label>
           <input v-model="muser.mmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="">
-          
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.mmname.alpha">Invalid middle name. Only alphabetic characters are allowed.</p>
+
         </div>
 
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -65,7 +68,7 @@
           </label>
           <input v-model="muser.msname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.msname.required">Mother's Surname is required</p>
-
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.muser.msname.alpha">Invalid Surname. Only alphabetic characters are allowed.</p>
         </div>
         
       </div>
@@ -435,6 +438,7 @@
           </label>
           <input v-model="fuser.ffname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.ffname.required">Father's first name is required</p>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.ffname.alpha">Invalid first name. Only alphabetic characters are allowed.</p>
 
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -442,7 +446,8 @@
             Middle Name  <span class="text-red-500"></span>
           </label>
           <input v-model="fuser.fmname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" >
-          
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fmname.alpha">Invalid middle name. Only alphabetic characters are allowed.</p>
+
         </div>
 
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
@@ -451,6 +456,7 @@
           </label>
           <input v-model="fuser.fsname" class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="" required>
           <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fsname.required">Father's surname is required</p>
+          <p class="text-red-500 text-xs italic" v-show="next && !$v.fuser.fsname.alpha">Invalid surname. Only alphabetic characters are allowed.</p>
 
         </div>
         
@@ -776,10 +782,10 @@
 //  import centres from '~/static/occupation.json'
  import swal from 'sweetalert2';
 
- import { required, email, sameAs, minLength } from 'vuelidate/lib/validators';
+ import { required, email, sameAs, minLength, alpha } from 'vuelidate/lib/validators';
  import { helpers } from 'vuelidate/lib/validators'
 
-const mobile = helpers.regex(/(^[0]\d{10}$)|(^[\+]?[234]\d{12}$)/);
+ const nigeriaPhoneNumber = helpers.regex('nigeriaPhoneNumber', /^(\\+?234|0)[789]\d{9}$/);
 
 window.Swal = swal;
 export default {  
@@ -875,9 +881,10 @@ export default {
                   },
                   validations: {
                     muser: {
-                        mfname: {required},
+                        mfname: {required, alpha},
+                        mmname: {alpha},
                         //hphone: {required},
-                        msname: {required},
+                        msname: {required, alpha},
                         mphone: {required},
                         //mnin: {required},
                         maddress: {required},
@@ -901,9 +908,9 @@ export default {
                         //phone1: {required}
                     },
                     fuser: {
-                        ffname: {required},
-                        //mmname: {required},
-                        fsname: {required},
+                        ffname: {required, alpha},
+                        fmname: {alpha},
+                        fsname: {required, alpha},
                         fphone: {required},
                         //mnin: {required},
                         faddress: {required},
