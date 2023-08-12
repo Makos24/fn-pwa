@@ -5,11 +5,11 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   router: {
-    base: '/pwa2/',
+    base: '/pwa-test/',
     middleware: ['remember']
   },
   env: {
-    baseUrl: process.env.BASE_URL || 'https://avigohealth.com/albarka-admin'
+    baseUrl: process.env.BASE_URL || 'https://avigohealth.com/albarka-test'
     //baseUrl: process.env.BASE_URL || 'http://localhost:8000'
   },
 
@@ -71,7 +71,7 @@ export default {
         laravelSanctum: {
           provider: 'laravel/sanctum',
           //url: 'http://localhost:8000',
-          url: 'https://avigohealth.com/albarka-admin',
+          url: 'https://avigohealth.com/albarka-test',
           endpoints: {
             login : {
               url: '/api/login'
@@ -133,14 +133,14 @@ export default {
   //   }
   // },
   axios: {
-    baseUrl : 'https://avigohealth.com/albarka-admin',
+    baseUrl : 'https://avigohealth.com/albarka-test',
     //baseUrl : 'http://localhost:8000',
     proxy: true,
     credentials: true
   },
   proxy: {
     '/laravel': {
-      target: 'https://avigohealth.com/albarka-admin',
+      target: 'https://avigohealth.com/albarka-test',
       //target: 'http://localhost:8000',
       pathRewrite: { '^/laravel': '/' },
     }

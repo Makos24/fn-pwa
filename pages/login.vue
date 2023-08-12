@@ -15,6 +15,10 @@
             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Password</label>
             <input v-model="password" type="number" style="-webkit-text-security:disc;" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required="">
         </div> 
+
+        <div class="flex items-start mt-1 mb-3">
+            <nuxt-link to="/forgot-password" class="ml-2 text-sm font-medium text-blue-900 dark:text-blue-400 w-full sm:w-auto text-center">Forgot Password?</nuxt-link>
+          </div>
         
         <div class="flex items-start mb-6">
             <div class="flex items-center h-5">
@@ -29,7 +33,7 @@
         <div class="flex items-start mt-6">
             
           <nuxt-link to="/register" class="ml-2 text-xl font-medium text-blue-900 dark:text-blue-400 w-full sm:w-auto text-center">Create Account</nuxt-link>
-        </div>
+          </div>
       </form>
     </div>
 </div>
@@ -70,26 +74,18 @@ export default {
 
          // console.log(res);
 
-         if(res.data.edd.length > 0){
+        //  if(res.data.edd.length > 0){
                             
-            this.edds = this.edds.concat(res.data.edd);
+        //     this.edds = this.edds.concat(res.data.edd);
 
-            let foo = new Map();
-            for(const tag of this.edds) {
-            foo.set(tag.edd_id, tag);
-            }
-            let final = [...foo.values()]
-            this.edds = final;
-
-
-            // this.edds.forEach(item => {
-            //   if(!map.has(item.edd_id)){
-            //     map.set(item.edd_id, item);
-            //   }
-            // });
-            // Array.from(map.values());
+        //     let foo = new Map();
+        //     for(const tag of this.edds) {
+        //     foo.set(tag.edd_id, tag);
+        //     }
+        //     let final = [...foo.values()]
+        //     this.edds = final;
                                                         
-          }
+        //   }
 
           if(res.data.children.length > 0){
                             
@@ -156,12 +152,12 @@ export default {
     
   },
   watch: {
-        edds: {
-            handler() {
-                localStorage.setItem("edds", JSON.stringify(this.edds));
-            },
-            deep: true
-        },
+        // edds: {
+        //     handler() {
+        //         localStorage.setItem("edds", JSON.stringify(this.edds));
+        //     },
+        //     deep: true
+        // },
         children: {
             handler() {
                 localStorage.setItem("children", JSON.stringify(this.children));

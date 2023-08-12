@@ -387,7 +387,7 @@ export default {
                   addBirth() {
 
                     this.birth.edd = this.edd;
-                    //this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
+                    this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
 
                     this.$v.$touch(); // Trigger validation for all fields
       
@@ -423,7 +423,7 @@ export default {
 
                           let birth = {};
                           this.birth.edd = this.edd;
-                          //this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
+                          this.birth.chips_id = JSON.parse(localStorage.getItem("auth.user")).id;
                           birth.type = this.birth.type;
                           birth.place = this.birth.place;
                           birth.place_other = this.birth.place_other;
